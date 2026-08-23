@@ -327,20 +327,48 @@ class ApiService {
 
   // Reports
   async getJsonReport(analysisId: string): Promise<NexusReportData> {
-    return this.request<NexusReportData>(`/reports/${analysisId}/json`);
+    if (!analysisId || typeof analysisId !== 'string' || analysisId.startsWith('[object')) {
+      throw new Error(`Invalid analysis ID provided to getJsonReport: ${String(analysisId)}`);
+    }
+    try {
+      return await this.request<NexusReportData>(`/reports/${analysisId}/json`);
+    } catch (err: any) {
+      console.error('[Nexus API] Error fetching JSON report:', {
+        endpoint: `${API_BASE_URL}/reports/${analysisId}/json`,
+        analysisId,
+        error: err.message,
+      });
+      throw err;
+    }
   }
 
   async getMarkdownReport(analysisId: string): Promise<string> {
+    if (!analysisId || typeof analysisId !== 'string' || analysisId.startsWith('[object')) {
+      throw new Error(`Invalid analysis ID provided to getMarkdownReport: ${String(analysisId)}`);
+    }
     const headers: Record<string, string> = {};
     const currentToken = this.getToken();
     if (currentToken) {
       headers['Authorization'] = `Bearer ${currentToken}`;
     }
-    const response = await fetch(`${API_BASE_URL}/reports/${analysisId}/markdown`, {
+    const endpointUrl = `${API_BASE_URL}/reports/${analysisId}/markdown`;
+    const response = await fetch(endpointUrl, {
       headers,
     });
     if (!response.ok) {
-      throw new Error(`Failed to fetch markdown report: ${response.status}`);
+      let rawBody = '';
+      try {
+        rawBody = await response.text();
+      } catch {
+        // ignore
+      }
+      console.error('[Nexus API] Error fetching markdown report:', {
+        endpoint: endpointUrl,
+        status: response.status,
+        responseBody: rawBody,
+        analysisId,
+      });
+      throw new Error(`Failed to fetch markdown report: ${response.status}${rawBody ? ` (${rawBody})` : ''}`);
     }
     return response.text();
   }

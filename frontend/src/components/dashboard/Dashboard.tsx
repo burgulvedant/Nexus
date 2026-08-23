@@ -41,6 +41,81 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
   const [markdownContent, setMarkdownContent] = useState<string>('');
   const [reportModalRepoName, setReportModalRepoName] = useState<string>('GradScope');
 
+  // Poll and synchronize analysis status, live stages, and report data
+  const pollAndSyncAnalysis = useCallback(async (analysisId: string): Promise<AnalysisDetail | null> => {
+    let attempts = 0;
+    while (attempts < 180) { // Up to 3 minutes of polling
+      try {
+        const statusRes = await api.getAnalysisStatus(analysisId);
+
+        // Update live progress and stage in currentAnalysis
+        setCurrentAnalysis((prev) => {
+          if (prev && prev.id === analysisId) {
+            return {
+              ...prev,
+              status: statusRes.status,
+              current_stage: statusRes.current_stage,
+              error_message: statusRes.error_message,
+              ...(statusRes.progress
+                ? {
+                    total_claims: statusRes.progress.total_claims,
+                    verified_count: statusRes.progress.verified,
+                    uncertain_count: statusRes.progress.uncertain,
+                    contradicted_count: statusRes.progress.contradicted,
+                    truth_score: statusRes.progress.truth_score,
+                  }
+                : {}),
+            };
+          }
+          return prev;
+        });
+
+        if (statusRes.status === 'COMPLETED') {
+          const [completedDetail, rep] = await Promise.all([
+            api.getAnalysis(analysisId),
+            api.getJsonReport(analysisId),
+          ]);
+          setCurrentAnalysis(completedDetail);
+          setReportData(rep);
+          setRecentAnalyses((prev) =>
+            prev.map((a) => (a.id === completedDetail.id ? completedDetail : a))
+          );
+          if (completedDetail.repository_id) {
+            api.listRepositoryAnalyses(completedDetail.repository_id).then(setRecentAnalyses).catch(() => {});
+          }
+          return completedDetail;
+        }
+
+        if (statusRes.status === 'FAILED') {
+          const failedDetail = await api.getAnalysis(analysisId);
+          setCurrentAnalysis(failedDetail);
+          setReportData(null);
+          setRecentAnalyses((prev) =>
+            prev.map((a) => (a.id === failedDetail.id ? failedDetail : a))
+          );
+          return failedDetail;
+        }
+      } catch (err) {
+        console.error('[Nexus Dashboard] Error during analysis polling:', err);
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      attempts++;
+    }
+
+    try {
+      const finalDetail = await api.getAnalysis(analysisId);
+      setCurrentAnalysis(finalDetail);
+      if (finalDetail.status === 'COMPLETED') {
+        const rep = await api.getJsonReport(analysisId);
+        setReportData(rep);
+      }
+      return finalDetail;
+    } catch {
+      return null;
+    }
+  }, []);
+
   // 1. Initial Load: Auth and fetch latest repository & analyses
   const initializeDashboard = useCallback(async () => {
     try {
@@ -66,18 +141,24 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
         // If no analyses exist yet, trigger the first analysis
         if (!latestAnalysis) {
           const created = await api.createAnalysis(activeRepo.id);
-          // Poll until completed
-          latestAnalysis = await pollAnalysisUntilComplete(created.id);
-          analyses = [latestAnalysis];
-        }
+          analyses = [created];
+          setRecentAnalyses(analyses);
+          setCurrentAnalysis(created);
+          pollAndSyncAnalysis(created.id);
+        } else {
+          setRecentAnalyses(analyses);
+          setCurrentAnalysis(latestAnalysis);
 
-        setRecentAnalyses(analyses);
-        setCurrentAnalysis(latestAnalysis);
-
-        // Fetch structured report if completed
-        if (latestAnalysis && latestAnalysis.status === 'COMPLETED') {
-          const rep = await api.getJsonReport(latestAnalysis.id);
-          setReportData(rep);
+          // Fetch structured report if completed, or resume polling if running
+          if (latestAnalysis.status === 'COMPLETED') {
+            const rep = await api.getJsonReport(latestAnalysis.id);
+            setReportData(rep);
+          } else if (latestAnalysis.status === 'RUNNING' || latestAnalysis.status === 'QUEUED') {
+            setReportData(null);
+            pollAndSyncAnalysis(latestAnalysis.id);
+          } else {
+            setReportData(null);
+          }
         }
       } else {
         // Explicitly clear all state when zero repositories exist
@@ -91,21 +172,7 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
     } finally {
       setLoading(false);
     }
-  }, []);
-
-  // Poll analysis status helper
-  const pollAnalysisUntilComplete = async (analysisId: string): Promise<AnalysisDetail> => {
-    let attempts = 0;
-    while (attempts < 60) {
-      const statusRes = await api.getAnalysisStatus(analysisId);
-      if (statusRes.status === 'COMPLETED' || statusRes.status === 'FAILED') {
-        return api.getAnalysis(analysisId);
-      }
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      attempts++;
-    }
-    return api.getAnalysis(analysisId);
-  };
+  }, [pollAndSyncAnalysis]);
 
   useEffect(() => {
     initializeDashboard();
@@ -125,17 +192,22 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
       if (!activeAnalysis) {
         // If repo has no analyses yet, trigger new analysis
         const created = await api.createAnalysis(repoId);
-        activeAnalysis = await pollAnalysisUntilComplete(created.id);
-        setRecentAnalyses([activeAnalysis]);
-      }
-
-      setCurrentAnalysis(activeAnalysis);
-
-      if (activeAnalysis && activeAnalysis.status === 'COMPLETED') {
-        const rep = await api.getJsonReport(activeAnalysis.id);
-        setReportData(rep);
-      } else {
+        setRecentAnalyses([created]);
+        setCurrentAnalysis(created);
         setReportData(null);
+        pollAndSyncAnalysis(created.id);
+      } else {
+        setCurrentAnalysis(activeAnalysis);
+
+        if (activeAnalysis.status === 'COMPLETED') {
+          const rep = await api.getJsonReport(activeAnalysis.id);
+          setReportData(rep);
+        } else if (activeAnalysis.status === 'RUNNING' || activeAnalysis.status === 'QUEUED') {
+          setReportData(null);
+          pollAndSyncAnalysis(activeAnalysis.id);
+        } else {
+          setReportData(null);
+        }
       }
 
       setCurrentTab('dashboard');
@@ -168,16 +240,21 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
         let activeAnalysis = analyses && analyses.length > 0 ? analyses[0] : null;
         if (!activeAnalysis) {
           const created = await api.createAnalysis(nextRepo.id);
-          activeAnalysis = await pollAnalysisUntilComplete(created.id);
-          setRecentAnalyses([activeAnalysis]);
-        }
-
-        setCurrentAnalysis(activeAnalysis);
-        if (activeAnalysis && activeAnalysis.status === 'COMPLETED') {
-          const rep = await api.getJsonReport(activeAnalysis.id);
-          setReportData(rep);
-        } else {
+          setRecentAnalyses([created]);
+          setCurrentAnalysis(created);
           setReportData(null);
+          pollAndSyncAnalysis(created.id);
+        } else {
+          setCurrentAnalysis(activeAnalysis);
+          if (activeAnalysis.status === 'COMPLETED') {
+            const rep = await api.getJsonReport(activeAnalysis.id);
+            setReportData(rep);
+          } else if (activeAnalysis.status === 'RUNNING' || activeAnalysis.status === 'QUEUED') {
+            setReportData(null);
+            pollAndSyncAnalysis(activeAnalysis.id);
+          } else {
+            setReportData(null);
+          }
         }
       } else {
         // No repositories remain
@@ -204,6 +281,9 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
         setReportData(rep);
       } else {
         setReportData(null);
+        if (detail.status === 'RUNNING' || detail.status === 'QUEUED') {
+          pollAndSyncAnalysis(detail.id);
+        }
       }
     } catch (err: any) {
       setError(err.message || 'Could not load analysis details.');
@@ -223,37 +303,33 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
 
     // Refresh list & select the newly created analysis immediately
     setCurrentAnalysis(newAnalysis);
+    setReportData(null);
     setRecentAnalyses((prev) => [newAnalysis, ...prev.filter((a) => a.id !== newAnalysis.id)]);
     setCurrentTab('dashboard');
 
-    // Background poll for completion
-    (async () => {
-      try {
-        const completed = await pollAnalysisUntilComplete(newAnalysis.id);
-        setCurrentAnalysis(completed);
-        setRecentAnalyses((prev) =>
-          prev.map((a) => (a.id === completed.id ? completed : a))
-        );
-        if (completed.status === 'COMPLETED') {
-          const rep = await api.getJsonReport(completed.id);
-          setReportData(rep);
-        }
-      } catch (e) {
-        console.error('Error during analysis polling:', e);
-      }
-    })();
+    // Start background poll and sync
+    pollAndSyncAnalysis(newAnalysis.id);
   };
 
   // Handle View / Export Full Report
-  const handleOpenMarkdownReport = async (analysisId?: string, repoName?: string) => {
-    const targetAnalysisId = analysisId || currentAnalysis?.id;
-    if (!targetAnalysisId) return;
+  const handleOpenMarkdownReport = async (analysisId?: string | unknown, repoName?: string) => {
+    const targetAnalysisId =
+      typeof analysisId === 'string' && analysisId.trim().length > 0 && !analysisId.startsWith('[object')
+        ? analysisId.trim()
+        : currentAnalysis?.id;
+
+    if (!targetAnalysisId) {
+      alert('No completed analysis available to view report.');
+      return;
+    }
+
     try {
       const md = await api.getMarkdownReport(targetAnalysisId);
       setMarkdownContent(md);
-      setReportModalRepoName(repoName || currentAnalysis?.repository?.name || 'GradScope');
+      setReportModalRepoName(repoName || currentAnalysis?.repository?.name || 'Nexus Analysis');
       setIsReportModalOpen(true);
     } catch (err: any) {
+      console.error('[Nexus Dashboard] Failed to open markdown report:', err);
       alert(`Could not fetch report: ${err.message}`);
     }
   };
@@ -274,6 +350,9 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
         setReportData(rep);
       } else {
         setReportData(null);
+        if (detail.status === 'RUNNING' || detail.status === 'QUEUED') {
+          pollAndSyncAnalysis(detail.id);
+        }
       }
     } catch (err: any) {
       console.error('Error switching to analysis:', err);
@@ -432,7 +511,7 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
                   findingsVerified={reportData?.findings?.verified || []}
                   findingsUncertain={reportData?.findings?.uncertain || []}
                   findingsContradicted={reportData?.findings?.contradicted || []}
-                  onViewAll={handleOpenMarkdownReport}
+                  onViewAll={() => handleOpenMarkdownReport(currentAnalysis?.id, currentAnalysis?.repository?.name)}
                 />
               </div>
 
@@ -452,7 +531,7 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
                   analyses={recentAnalyses}
                   currentAnalysisId={currentAnalysis?.id}
                   onSelectAnalysis={handleSelectAnalysis}
-                  onViewReport={handleOpenMarkdownReport}
+                  onViewReport={(analysisId) => handleOpenMarkdownReport(analysisId)}
                 />
               </div>
 
@@ -460,7 +539,7 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
               <div className="lg:col-span-5 flex flex-col">
                 <QuickActions
                   onNewAnalysis={() => setIsNewAnalysisOpen(true)}
-                  onViewAllReports={handleOpenMarkdownReport}
+                  onViewAllReports={() => handleOpenMarkdownReport(currentAnalysis?.id, currentAnalysis?.repository?.name)}
                 />
               </div>
             </div>

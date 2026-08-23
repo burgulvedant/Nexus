@@ -141,7 +141,8 @@ export default function RecentFindings({
       <div className="border-t border-border/60 pt-3 mt-3 text-center">
         <button
           onClick={onViewAll}
-          className="text-sm font-semibold text-nexus-600 hover:text-nexus-700 transition cursor-pointer"
+          disabled={allFindings.length === 0}
+          className="text-sm font-semibold text-nexus-600 hover:text-nexus-700 disabled:text-text-muted disabled:opacity-50 disabled:cursor-not-allowed transition cursor-pointer"
         >
           View All {allFindings.length} Findings &rarr;
         </button>
