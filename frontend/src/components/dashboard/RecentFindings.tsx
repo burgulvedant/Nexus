@@ -5,6 +5,7 @@ interface RecentFindingsProps {
   findingsVerified: Finding[];
   findingsUncertain: Finding[];
   findingsContradicted: Finding[];
+  loading?: boolean;
   onViewAll?: () => void;
 }
 
@@ -12,6 +13,7 @@ export default function RecentFindings({
   findingsVerified,
   findingsUncertain,
   findingsContradicted,
+  loading = false,
   onViewAll,
 }: RecentFindingsProps) {
   const [activeTab, setActiveTab] = useState<'all' | 'verified' | 'uncertain' | 'contradicted'>('all');
@@ -49,7 +51,7 @@ export default function RecentFindings({
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
-            All Findings ({allFindings.length})
+            All Findings ({loading ? '...' : allFindings.length})
           </button>
           <button
             onClick={() => setActiveTab('verified')}
@@ -59,7 +61,7 @@ export default function RecentFindings({
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
-            Verified ({findingsVerified.length})
+            Verified ({loading ? '...' : findingsVerified.length})
           </button>
           <button
             onClick={() => setActiveTab('uncertain')}
@@ -69,7 +71,7 @@ export default function RecentFindings({
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
-            Uncertain ({findingsUncertain.length})
+            Uncertain ({loading ? '...' : findingsUncertain.length})
           </button>
           <button
             onClick={() => setActiveTab('contradicted')}
@@ -79,13 +81,22 @@ export default function RecentFindings({
                 : 'text-text-muted hover:text-text-primary'
             }`}
           >
-            Contradicted ({findingsContradicted.length})
+            Contradicted ({loading ? '...' : findingsContradicted.length})
           </button>
         </div>
 
         {/* Findings List */}
         <div className="space-y-2.5">
-          {topFindings.length === 0 ? (
+          {loading ? (
+            <div className="space-y-3 py-2 animate-pulse">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="p-3.5 rounded-xl border border-slate-100 bg-slate-50/50 space-y-2">
+                  <div className="h-4 bg-slate-200/70 rounded w-3/4"></div>
+                  <div className="h-3 bg-slate-200/50 rounded w-1/2"></div>
+                </div>
+              ))}
+            </div>
+          ) : topFindings.length === 0 ? (
             <div className="py-8 text-center text-sm text-text-muted">
               No findings in this category.
             </div>

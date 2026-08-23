@@ -2,9 +2,10 @@ import type { EvidenceSummaryRow } from '../../api/nexusApi';
 
 interface EvidenceSummaryProps {
   evidenceSummary: EvidenceSummaryRow[];
+  loading?: boolean;
 }
 
-export default function EvidenceSummary({ evidenceSummary }: EvidenceSummaryProps) {
+export default function EvidenceSummary({ evidenceSummary, loading = false }: EvidenceSummaryProps) {
   // Aggregate by source_type (Source Code, Configuration, Documentation, Tests, Dependencies, Scripts)
   const categoryMap: Record<string, { supporting: number; contradicting: number; contextual: number; total: number }> = {};
 
@@ -70,7 +71,17 @@ export default function EvidenceSummary({ evidenceSummary }: EvidenceSummaryProp
             </tr>
           </thead>
           <tbody className="divide-y divide-border/40 text-[13.5px]">
-            {rows.length === 0 ? (
+            {loading ? (
+              [1, 2, 3].map((i) => (
+                <tr key={i} className="animate-pulse">
+                  <td className="py-2.5"><div className="h-3.5 bg-slate-200/70 rounded w-24"></div></td>
+                  <td className="py-2.5 text-right"><div className="h-3.5 bg-slate-200/50 rounded w-8 ml-auto"></div></td>
+                  <td className="py-2.5 text-right"><div className="h-3.5 bg-slate-200/50 rounded w-8 ml-auto"></div></td>
+                  <td className="py-2.5 text-right"><div className="h-3.5 bg-slate-200/50 rounded w-8 ml-auto"></div></td>
+                  <td className="py-2.5 text-right"><div className="h-3.5 bg-slate-200/70 rounded w-10 ml-auto"></div></td>
+                </tr>
+              ))
+            ) : rows.length === 0 ? (
               <tr>
                 <td colSpan={5} className="py-5 text-center text-text-muted text-sm">
                   No evidence aggregated yet.

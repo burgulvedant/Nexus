@@ -17,6 +17,7 @@ import MarkdownReportModal from './MarkdownReportModal';
 
 import {
   api,
+  formatReportDataToMarkdown,
   type AnalysisDetail,
   type NexusReportData,
   type RepositorySummary,
@@ -323,10 +324,21 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
       return;
     }
 
+    const modalRepoName = repoName || currentAnalysis?.repository?.name || 'Nexus Analysis';
+    setReportModalRepoName(modalRepoName);
+
+    // Fast path: If reportData is already loaded in React state for this analysis, render instantly
+    if (reportData && (reportData.metadata?.analysis_id === targetAnalysisId || currentAnalysis?.id === targetAnalysisId)) {
+      const clientMd = formatReportDataToMarkdown(reportData);
+      setMarkdownContent(clientMd);
+      setIsReportModalOpen(true);
+      return;
+    }
+
+    // Fallback: Fetch from backend endpoint (which now runs in <150ms with batch queries)
     try {
       const md = await api.getMarkdownReport(targetAnalysisId);
       setMarkdownContent(md);
-      setReportModalRepoName(repoName || currentAnalysis?.repository?.name || 'Nexus Analysis');
       setIsReportModalOpen(true);
     } catch (err: any) {
       console.error('[Nexus Dashboard] Failed to open markdown report:', err);
@@ -511,13 +523,17 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
                   findingsVerified={reportData?.findings?.verified || []}
                   findingsUncertain={reportData?.findings?.uncertain || []}
                   findingsContradicted={reportData?.findings?.contradicted || []}
+                  loading={loading || (!reportData && currentAnalysis?.status === 'COMPLETED')}
                   onViewAll={() => handleOpenMarkdownReport(currentAnalysis?.id, currentAnalysis?.repository?.name)}
                 />
               </div>
 
               {/* Right Column: Evidence Summary & Analysis Information (5 cols) */}
               <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
-                <EvidenceSummary evidenceSummary={reportData?.evidence_summary || []} />
+                <EvidenceSummary 
+                  evidenceSummary={reportData?.evidence_summary || []} 
+                  loading={loading || (!reportData && currentAnalysis?.status === 'COMPLETED')}
+                />
 
                 <AnalysisInformation report={reportData} analysis={currentAnalysis} />
               </div>

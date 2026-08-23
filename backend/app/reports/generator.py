@@ -2,7 +2,7 @@ import json
 import uuid
 from datetime import datetime
 from collections import defaultdict
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from backend.app.repositories.models import Repository
 from backend.app.analyses.models import Analysis
@@ -15,14 +15,20 @@ def generate_nexus_report_data(analysis_id: uuid.UUID, db: Session) -> dict:
     """
     Compiles database structures for a specific analysis run into a nested,
     serializable dictionary representing the complete Nexus Truth Report.
+    Uses batch eager loading to prevent N+1 query bottlenecks.
     """
-    # 1. Fetch metadata
+    # 1. Fetch metadata and eager-load associated claims, verdicts, and evidence in batch
     analysis = db.query(Analysis).filter(Analysis.id == analysis_id).first()
     if not analysis:
         return {}
 
     repo = analysis.repository
-    claims = db.query(Claim).filter(Claim.analysis_id == analysis_id).all()
+    claims = (
+        db.query(Claim)
+        .options(selectinload(Claim.verdict), selectinload(Claim.evidence))
+        .filter(Claim.analysis_id == analysis_id)
+        .all()
+    )
     
     # 2. Gather counts and verdicts
     verified_count = 0
@@ -66,8 +72,8 @@ def generate_nexus_report_data(analysis_id: uuid.UUID, db: Session) -> dict:
         for uid in cont_ids:
             evidence_relations[uid] = "CONTEXTUAL"
 
-        # Load claim evidence
-        ev_records = db.query(Evidence).filter(Evidence.claim_id == claim.id).all()
+        # Claim evidence is preloaded in-memory via selectinload
+        ev_records = claim.evidence
         evidence_items = []
         found_types = set()
 
@@ -128,11 +134,10 @@ def generate_nexus_report_data(analysis_id: uuid.UUID, db: Session) -> dict:
             uncertain_count += 1
             findings_uncertain.append(finding)
 
-    # Truth score formula
+    # Truth score formula using in-memory verdict statuses
     total_claims = len(claims)
-    truth_score = calculate_truth_score(
-        [v.status for v in db.query(Verdict).join(Claim).filter(Claim.analysis_id == analysis_id).all()]
-    ) if total_claims > 0 else 0
+    verdict_statuses = [c.verdict.status for c in claims if c.verdict]
+    truth_score = calculate_truth_score(verdict_statuses) if total_claims > 0 else 0
 
     # Build evidence summary output list
     evidence_summary_list = []

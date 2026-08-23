@@ -375,3 +375,142 @@ class ApiService {
 }
 
 export const api = new ApiService();
+
+export function formatReportDataToMarkdown(reportData: NexusReportData): string {
+  if (!reportData) {
+    return "# Nexus Documentation Truth Report\n\nNo report data available.";
+  }
+
+  const meta = reportData.metadata;
+  const sumry = reportData.summary;
+  const finds = reportData.findings;
+  const evSumry = reportData.evidence_summary || [];
+
+  const lines: string[] = [];
+  lines.push("# Nexus Documentation Truth Report");
+  lines.push("");
+  lines.push("## Report Metadata");
+  lines.push(`- **Repository Name**: ${meta.repository_name}`);
+  lines.push(`- **Repository URL**: ${meta.repository_url}`);
+  lines.push(`- **Commit SHA**: ${meta.commit_sha || 'N/A'}`);
+  lines.push(`- **Analysis Run ID**: \`${meta.analysis_id}\``);
+  lines.push(`- **Analysis Timestamp**: ${meta.analysis_timestamp}`);
+  lines.push(`- **Total Files Scanned**: ${meta.total_files}`);
+  lines.push(`- **Documentation Files Scanned**: ${meta.documentation_files}`);
+  lines.push(`- **Analysis Status**: ${meta.analysis_status}`);
+  lines.push("");
+
+  lines.push("## Verification Summary");
+  lines.push(`- **Nexus Truth Score**: **${sumry.truth_score} / 100**`);
+  lines.push(`- **Total Claims Extracted**: ${sumry.total_claims}`);
+  lines.push(`- **Verified Claims**: ${sumry.verified_count}`);
+  lines.push(`- **Uncertain Claims**: ${sumry.uncertain_count}`);
+  lines.push(`- **Contradicted Claims**: ${sumry.contradicted_count}`);
+  lines.push("");
+
+  lines.push("---");
+  lines.push("");
+  lines.push("## Verdict Details");
+  lines.push("");
+
+  // 1. Contradicted Findings
+  lines.push("### Contradicted Findings");
+  if (!finds.contradicted || finds.contradicted.length === 0) {
+    lines.push("\n*No contradictions were detected in this analysis.*\n");
+  } else {
+    finds.contradicted.forEach((f, idx) => {
+      lines.push(`#### ${idx + 1}. ${f.title}`);
+      lines.push(`- **Category**: ${f.category}`);
+      lines.push(`- **Documentation Path**: \`${f.source_file}:${f.line_number || 'N/A'}\``);
+      lines.push(`- **Original Text**: *"${(f.original_text || '').trim()}"*`);
+      lines.push(`- **Verdict Confidence**: ${f.truth_confidence.toFixed(2)}`);
+      lines.push(`- **Explanation**: ${f.explanation}`);
+      if (f.evidence && f.evidence.length > 0) {
+        lines.push("- **Discovered Code Evidence**:");
+        f.evidence.forEach((e) => {
+          lines.push(`  - **[${e.relationship}]** \`[${e.source_type}]\` \`${e.file_path}:${e.line_number || 'N/A'}\``);
+          lines.push(`    *Discovery*: ${e.discovery_method} (Confidence: ${e.confidence.toFixed(2)})`);
+          if (e.content) {
+            const preview = e.content.replace(/\n/g, " ");
+            lines.push(`    *Preview*: \`${preview}\``);
+          }
+        });
+      }
+      lines.push("");
+    });
+  }
+
+  // 2. Uncertain Findings
+  lines.push("### Uncertain Findings");
+  if (!finds.uncertain || finds.uncertain.length === 0) {
+    lines.push("\n*No uncertain claims found.*\n");
+  } else {
+    finds.uncertain.forEach((f, idx) => {
+      lines.push(`#### ${idx + 1}. ${f.title}`);
+      lines.push(`- **Category**: ${f.category}`);
+      lines.push(`- **Documentation Path**: \`${f.source_file}:${f.line_number || 'N/A'}\``);
+      lines.push(`- **Original Text**: *"${(f.original_text || '').trim()}"*`);
+      lines.push(`- **Verdict Confidence**: ${f.truth_confidence.toFixed(2)}`);
+      lines.push(`- **Explanation**: ${f.explanation}`);
+      if (f.missing_evidence_types && f.missing_evidence_types.length > 0) {
+        lines.push(`- **Missing Evidence Indicators**: Expected \`${f.missing_evidence_types.join(', ')}\` but was absent.`);
+      }
+      if (f.evidence && f.evidence.length > 0) {
+        lines.push("- **Retrieved Contextual Evidence**:");
+        f.evidence.forEach((e) => {
+          lines.push(`  - **[${e.relationship}]** \`[${e.source_type}]\` \`${e.file_path}:${e.line_number || 'N/A'}\``);
+          lines.push(`    *Discovery*: ${e.discovery_method} (Confidence: ${e.confidence.toFixed(2)})`);
+          if (e.content) {
+            const preview = e.content.replace(/\n/g, " ");
+            lines.push(`    *Preview*: \`${preview}\``);
+          }
+        });
+      }
+      lines.push("");
+    });
+  }
+
+  // 3. Verified Findings
+  lines.push("### Verified Findings");
+  if (!finds.verified || finds.verified.length === 0) {
+    lines.push("\n*No verified claims found.*\n");
+  } else {
+    finds.verified.forEach((f, idx) => {
+      lines.push(`#### ${idx + 1}. ${f.title}`);
+      lines.push(`- **Category**: ${f.category}`);
+      lines.push(`- **Documentation Path**: \`${f.source_file}:${f.line_number || 'N/A'}\``);
+      lines.push(`- **Original Text**: *"${(f.original_text || '').trim()}"*`);
+      lines.push(`- **Verdict Confidence**: ${f.truth_confidence.toFixed(2)}`);
+      lines.push(`- **Explanation**: ${f.explanation}`);
+      if (f.evidence && f.evidence.length > 0) {
+        lines.push("- **Retrieved Code Evidence**:");
+        f.evidence.forEach((e) => {
+          lines.push(`  - **[${e.relationship}]** \`[${e.source_type}]\` \`${e.file_path}:${e.line_number || 'N/A'}\``);
+          lines.push(`    *Discovery*: ${e.discovery_method} (Confidence: ${e.confidence.toFixed(2)})`);
+          if (e.content) {
+            const preview = e.content.replace(/\n/g, " ");
+            lines.push(`    *Preview*: \`${preview}\``);
+          }
+        });
+      }
+      lines.push("");
+    });
+  }
+
+  lines.push("---");
+  lines.push("");
+  lines.push("## Evidence Summary Matrix");
+  lines.push("");
+  lines.push("| Source Type | Discovery Method | Supporting | Contradicting | Contextual |");
+  lines.push("| --- | --- | :---: | :---: | :---: |");
+  if (evSumry.length === 0) {
+    lines.push("| [None] | [None] | 0 | 0 | 0 |");
+  } else {
+    evSumry.forEach((es) => {
+      lines.push(`| ${es.source_type} | ${es.discovery_method} | ${es.supporting} | ${es.contradicting} | ${es.contextual} |`);
+    });
+  }
+  lines.push("");
+
+  return lines.join("\n");
+}
