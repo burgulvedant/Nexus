@@ -15,6 +15,9 @@ if not db_url:
     data_dir = workspace_root / "data"
     data_dir.mkdir(parents=True, exist_ok=True)
     db_url = f"sqlite:///{data_dir}/dev.db"
+elif db_url.startswith("postgres://"):
+    # SQLAlchemy requires postgresql:// instead of legacy postgres:// scheme
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
 
 engine_kwargs = {}
 # SQLite requires check_same_thread: False to be used by multiple threads in FastAPI
