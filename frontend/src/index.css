@@ -1,0 +1,72 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-nexus-50: #eff6ff;
+  --color-nexus-100: #dbeafe;
+  --color-nexus-200: #bfdbfe;
+  --color-nexus-300: #93c5fd;
+  --color-nexus-400: #60a5fa;
+  --color-nexus-500: #3b82f6;
+  --color-nexus-600: #2563eb;
+  --color-nexus-700: #1d4ed8;
+  --color-nexus-800: #1e40af;
+  --color-nexus-900: #1e3a8a;
+
+  --color-verified: #16a34a;
+  --color-verified-bg: #f0fdf4;
+  --color-uncertain: #d97706;
+  --color-uncertain-bg: #fffbeb;
+  --color-contradicted: #dc2626;
+  --color-contradicted-bg: #fef2f2;
+
+  --color-surface: #ffffff;
+  --color-surface-alt: #f8fafc;
+  --color-surface-page: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
+
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-surface-page);
+    color: var(--color-text-primary);
+  }
+}
+
+/* Evidence strip infinite scroll animation */
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 30s linear infinite;
+}
+
+/* Product reveal animation helper */
+.product-reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  filter: blur(4px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}

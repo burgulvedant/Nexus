@@ -1,0 +1,3010 @@
+{
+  "metadata": {
+    "report_id": "be5baada-e71d-4b0e-a73e-966a9a92dd0e",
+    "repository_name": "LifeCost Project (Nexus)",
+    "repository_url": "/Users/vedantburgul/Desktop/LifeCost Project",
+    "commit_sha": "1a3471e2d0915a73106ec58429e34f718a9c646d",
+    "analysis_id": "333d47b4-19c7-42c5-9884-498b639240d5",
+    "analysis_timestamp": "2026-08-23 06:31:34.539057",
+    "total_files": 64,
+    "documentation_files": 3,
+    "analysis_status": "COMPLETED"
+  },
+  "summary": {
+    "truth_score": 75,
+    "total_claims": 73,
+    "verified_count": 36,
+    "uncertain_count": 37,
+    "contradicted_count": 0
+  },
+  "findings": {
+    "verified": [
+      {
+        "claim_id": "a39f6d62-b231-4102-bbc6-336d3eb44f45",
+        "title": "Configuration metadata specification",
+        "category": "CONFIGURATION",
+        "source_file": "README.md",
+        "line_number": 26,
+        "original_text": "GradScope solves this by providing a unified, transparent decision-support calculator. Instead of manually cross-referencing university brochures, Numbeo indexes, and currency exchange tables, students can select their desired course, city, and institution, apply their expected scholarship percentage, and immediately receive a personalized cost breakdown based on the project's 2026 dataset.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at README.md:26, README.md:83, README.md:84, README.md:211, backend/app/seed.py:15.",
+        "evidence": [
+          {
+            "id": "b825ffb0-7758-4f4e-a72a-567ad98ef8f6",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "README.md",
+            "line_number": 26,
+            "content": "GradScope solves this by providing a unified, transparent decision-support calculator. Instead of manually cross-referencing university brochures, Numbeo indexes, and currency exchange tables, students can select their desired course, city, and institution, apply their expected scholarship percentage, and immediately receive a personalized cost breakdown based on the project's 2026 dataset.",
+            "explanation": "Found reference to token '2026' in database file or source script.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "d0b20f8b-07a1-482f-a9a6-88decb7c4434",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "README.md",
+            "line_number": 83,
+            "content": "The application runs on a dataset containing **68 validated course/university combinations** across Australian capital cities:\n* **Processed Dataset:** `data/processed/gradscope_calculator_2026.csv` (The source of truth for tuition and program duration baselines).\n* **Raw Cost-of-Living Dataset:** `data/raw/australia_cost_of_living_2026_v2.csv` (Compiled city-level consumer prices).",
+            "explanation": "Found reference to token '2026' in database file or source script.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "1299a324-c9a3-4e3f-92e2-4c6e3520423a",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "README.md",
+            "line_number": 84,
+            "content": "* **Processed Dataset:** `data/processed/gradscope_calculator_2026.csv` (The source of truth for tuition and program duration baselines).\n* **Raw Cost-of-Living Dataset:** `data/raw/australia_cost_of_living_2026_v2.csv` (Compiled city-level consumer prices).\n* **Data Pipelines:** Jupyter Notebooks (`notebooks/01_data_cleaning.ipynb` to `04_build_lifecost_data_model.ipynb`) clean raw metrics, merge statistics, and build relational databases. Seeding is automated via `scripts/generate_processed_data.py` and `backend/app/seed.py`.",
+            "explanation": "Found reference to token '2026' in database file or source script.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "1242bc02-03c1-4b85-9379-0e27ec25ff89",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "README.md",
+            "line_number": 211,
+            "content": "* **2026 Data Horizon:** All tuition fee figures and Numbeo consumer pricing baselines correspond directly to the year 2026, without dynamic forecasting.\n* **Postgraduate Focus:** The platform currently models Master's level programs only, excluding undergraduate, diploma, or doctoral structures.",
+            "explanation": "Found reference to token '2026' in database file or source script.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "a7da7c22-acde-4852-9397-d59a1b4a52d5",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/seed.py",
+            "line_number": 15,
+            "content": "/ \"processed\"\n    / \"gradscope_calculator_2026.csv\"\n)",
+            "explanation": "Found reference to token '2026' in database file or source script.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "20496e43-ccc2-4293-90bc-70f694e14da9",
+        "title": "Application capability limit",
+        "category": "LIMIT",
+        "source_file": "README.md",
+        "line_number": 38,
+        "original_text": "  * **Monthly Expenses Breakdown (Horizontal Bar Chart):** Breaks down the monthly living baseline into Housing, Food, Transit, and Utilities.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at README.md:38, README.md:64, frontend/src/types/index.ts:32.",
+        "evidence": [
+          {
+            "id": "af52d58c-2a78-49c8-91ed-6e3141a495df",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 38,
+            "content": "* **Annual Cost Ratio (Bar Chart):** Compares the tuition fee to living costs on an annual basis.\n  * **Monthly Expenses Breakdown (Horizontal Bar Chart):** Breaks down the monthly living baseline into Housing, Food, Transit, and Utilities.\n* **Detailed Expandable Accordions:** Displays itemized grocery and utility costs dynamically mapped to the target city.",
+            "explanation": "Found contextual reference containing the keyword 'monthly'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "0572c9e3-a2d1-4840-86b3-27eadd5fb933",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 64,
+            "content": "$$\\text{Living Costs} = \\text{Monthly Living Cost} \\times 12 \\times \\text{Program Duration (Years)}$$",
+            "explanation": "Found contextual reference containing the keyword 'monthly'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "2b3f33fa-ae9c-45aa-a627-a644a8f9e094",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "frontend/src/types/index.ts",
+            "line_number": 32,
+            "content": "water_15l: number;\n  transport_monthly_pass: number;\n  utilities_85sqm: number;",
+            "explanation": "Found contextual reference containing the keyword 'monthly'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "4dc090b4-6b1b-49b4-bacd-42828cf31241",
+        "title": "System architectural style",
+        "category": "ARCHITECTURE",
+        "source_file": "README.md",
+        "line_number": 72,
+        "original_text": "* **Frontend:** React 18, Vite, TypeScript, Tailwind CSS, Framer Motion, Recharts, Lucide React.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at frontend/package.json:15, frontend/package.json:17, frontend/package.json:28, frontend/package.json:7.",
+        "evidence": [
+          {
+            "id": "50220ffb-d009-4a33-ab98-a20d9ca8faa4",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 15,
+            "content": "\"react\": \"^19.2.8\",",
+            "explanation": "Found NPM package dependency 'react' version ^19.2.8 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "fd93f84c-472b-4567-804d-64d76e8f68ab",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 17,
+            "content": "\"recharts\": \"^3.10.1\"",
+            "explanation": "Found NPM package dependency 'recharts' version ^3.10.1 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "4335bf62-dd95-441e-a852-030924ae4328",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 28,
+            "content": "\"typescript\": \"~6.0.2\",",
+            "explanation": "Found NPM package dependency 'typescript' version ~6.0.2 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "3ae9d977-81e7-43f0-af8b-0ff4b7c481f5",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 7,
+            "content": "\"dev\": \"vite\",",
+            "explanation": "Found NPM package dependency 'vite' version ^8.2.0 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "465c4f45-1392-4766-bd10-77216a3092b3",
+        "title": "System architectural style",
+        "category": "ARCHITECTURE",
+        "source_file": "README.md",
+        "line_number": 73,
+        "original_text": "* **Backend:** FastAPI (Python), SQLAlchemy 2.0 (ORM), Pydantic, Uvicorn.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at requirements.txt:1, requirements.txt:2, requirements.txt:3.",
+        "evidence": [
+          {
+            "id": "10acc210-5fcc-47ef-aa64-206c59c4bbfa",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 1,
+            "content": "fastapi==0.141.1",
+            "explanation": "Found Python dependency 'fastapi' specified in requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "3d400a84-f981-4f27-b291-6cda4d2c562d",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 2,
+            "content": "uvicorn==0.52.3",
+            "explanation": "Found Python dependency 'uvicorn' specified in requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "a205ed2e-f6da-4273-a445-6f2aa36c27f3",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 3,
+            "content": "SQLAlchemy==2.0.52",
+            "explanation": "Found Python dependency 'sqlalchemy' specified in requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "94092f29-732e-4f08-8f3e-0db0004c3eb1",
+        "title": "Database management system specification",
+        "category": "DATABASE",
+        "source_file": "README.md",
+        "line_number": 74,
+        "original_text": "* **Database:** PostgreSQL, psycopg v3.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "PostgreSQL database configuration was verified by psycopg dependency declared in requirements.txt.",
+        "evidence": [
+          {
+            "id": "7f6a55df-a506-4662-a682-4a2d04e54490",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 4,
+            "content": "psycopg==3.3.4",
+            "explanation": "Found PostgreSQL psycopg driver dependency in Python requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "30bb50aa-cfbd-43df-b029-c63da6b478f6",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 5,
+            "content": "psycopg-binary==3.3.4",
+            "explanation": "Found PostgreSQL psycopg driver dependency in Python requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "c2d412db-9eb0-457d-a557-2351fec1ef47",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 9,
+            "content": "\"DATABASE_URL\",\n    \"postgresql+psycopg://vedantburgul@localhost:5432/gradscope_db\"\n)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "5565cf83-eb30-4a89-863b-332f96e45a73",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 15,
+            "content": "if DATABASE_URL.startswith(\"postgres://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "a95cec9e-dfa9-4c04-bc0b-fa4f3b3969cc",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 16,
+            "content": "DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "24c1ba5b-4cb5-4d22-97b3-c437b79b86d4",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 17,
+            "content": "elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "74d81ccf-4d3f-4d3c-8535-6075533f4145",
+        "title": "Database management system specification",
+        "category": "DATABASE",
+        "source_file": "README.md",
+        "line_number": 76,
+        "original_text": "* **Hosting:** Netlify (Frontend), Render (FastAPI Backend + PostgreSQL Database).",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "PostgreSQL database configuration was verified by psycopg dependency declared in requirements.txt.",
+        "evidence": [
+          {
+            "id": "98a8941d-189d-4c74-965a-70e64350f083",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 4,
+            "content": "psycopg==3.3.4",
+            "explanation": "Found PostgreSQL psycopg driver dependency in Python requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "3c63ddf1-26c5-482c-8e7e-96207c12f7a9",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 5,
+            "content": "psycopg-binary==3.3.4",
+            "explanation": "Found PostgreSQL psycopg driver dependency in Python requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "ed6fd4cb-749e-40a0-b427-e76914ea4874",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 9,
+            "content": "\"DATABASE_URL\",\n    \"postgresql+psycopg://vedantburgul@localhost:5432/gradscope_db\"\n)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "62cbad5d-e552-428c-8675-a762aa487cfe",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 15,
+            "content": "if DATABASE_URL.startswith(\"postgres://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "2523d937-5384-480b-a63a-561f42b41020",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 16,
+            "content": "DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "7e2eb44f-dc03-4c94-941a-8e30af956902",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 17,
+            "content": "elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "7e9da395-c5d0-4b8b-b490-16c81db6eb47",
+            "relationship": "CONTEXTUAL",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 1,
+            "content": "fastapi==0.141.1",
+            "explanation": "Found Python dependency 'fastapi' specified in requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "e0d0a5bc-f038-4f8f-9f3b-31e9d86ef1a3",
+        "title": "Configuration metadata specification",
+        "category": "CONFIGURATION",
+        "source_file": "README.md",
+        "line_number": 82,
+        "original_text": "The application runs on a dataset containing **68 validated course/university combinations** across Australian capital cities:",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at README.md:82, README.md:107, frontend/README.md:16.",
+        "evidence": [
+          {
+            "id": "93761cf8-827b-465c-8912-2ca893a2c55c",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 82,
+            "content": "The application runs on a dataset containing **68 validated course/university combinations** across Australian capital cities:\n* **Processed Dataset:** `data/processed/gradscope_calculator_2026.csv` (The source of truth for tuition and program duration baselines).",
+            "explanation": "Found contextual reference containing the keyword 'application'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "320de93e-29b5-4efc-87ab-0332dce79bc9",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 107,
+            "content": "\u2502       \u251c\u2500\u2500 database.py      # SQLAlchemy connection, dynamic SSL & scheme parsing\n\u2502       \u251c\u2500\u2500 main.py          # FastAPI application initialization & CORS config\n\u2502       \u251c\u2500\u2500 models.py        # SQLAlchemy model schemas",
+            "explanation": "Found contextual reference containing the keyword 'application'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "d692aa41-7c87-463d-9986-7079dc5a5d67",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 16,
+            "content": "If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:",
+            "explanation": "Found contextual reference containing the keyword 'application'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "f43e4cca-4f8a-4387-8093-5d8c1d7639d0",
+        "title": "Data file reference: data/processed/gradscopecalculator2026.csv",
+        "category": "CONFIGURATION",
+        "source_file": "README.md",
+        "line_number": 83,
+        "original_text": "* **Processed Dataset:** `data/processed/gradscope_calculator_2026.csv` (The source of truth for tuition and program duration baselines).",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at README.md:83, README.md:85, README.md:119.",
+        "evidence": [
+          {
+            "id": "fbac7dff-e59b-43c4-9d99-48afe8d39ed6",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 83,
+            "content": "The application runs on a dataset containing **68 validated course/university combinations** across Australian capital cities:\n* **Processed Dataset:** `data/processed/gradscope_calculator_2026.csv` (The source of truth for tuition and program duration baselines).\n* **Raw Cost-of-Living Dataset:** `data/raw/australia_cost_of_living_2026_v2.csv` (Compiled city-level consumer prices).",
+            "explanation": "Found contextual reference containing the keyword 'processed'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "f2f3f13b-4e71-46d4-8d39-d6345a1926ca",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 85,
+            "content": "* **Raw Cost-of-Living Dataset:** `data/raw/australia_cost_of_living_2026_v2.csv` (Compiled city-level consumer prices).\n* **Data Pipelines:** Jupyter Notebooks (`notebooks/01_data_cleaning.ipynb` to `04_build_lifecost_data_model.ipynb`) clean raw metrics, merge statistics, and build relational databases. Seeding is automated via `scripts/generate_processed_data.py` and `backend/app/seed.py`.",
+            "explanation": "Found contextual reference containing the keyword 'processed'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "7173db0b-8ef0-4165-b0b1-10fa98e518c6",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 119,
+            "content": "\u2502   \u251c\u2500\u2500 raw/                 # Source Numbeo & education statistics\n\u2502   \u251c\u2500\u2500 processed/           # Cleaned datasets loaded by database seeder\n\u2502   \u2514\u2500\u2500 analysis/            # Validation spreadsheets",
+            "explanation": "Found contextual reference containing the keyword 'processed'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "31bc0593-5ec1-43ba-a727-e8bd6e7c083f",
+        "title": "Data file reference: data/raw/australiacostofliving2026v2.csv",
+        "category": "CONFIGURATION",
+        "source_file": "README.md",
+        "line_number": 84,
+        "original_text": "* **Raw Cost-of-Living Dataset:** `data/raw/australia_cost_of_living_2026_v2.csv` (Compiled city-level consumer prices).",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at frontend/src/types/index.ts:14, frontend/src/services/apiService.ts:2, frontend/src/services/apiService.ts:61.",
+        "evidence": [
+          {
+            "id": "66312d25-6723-487d-9988-9f3f82a49478",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "frontend/src/types/index.ts",
+            "line_number": 14,
+            "content": "export interface CityCostOfLiving {\n  city: string;",
+            "explanation": "Found contextual reference containing the keyword 'costofliving'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "48d52230-f452-46ba-8aa6-0c5932f31ec3",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "frontend/src/services/apiService.ts",
+            "line_number": 2,
+            "content": "import type { CalculationResult } from '../types';\nimport { getCityCostOfLiving, FOOD_QUANTITIES, FOOD_COLUMN_MAP } from './dataService';",
+            "explanation": "Found contextual reference containing the keyword 'costofliving'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "4b48e6ae-7743-4c1f-92ff-e1c468bafa8f",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "frontend/src/services/apiService.ts",
+            "line_number": 61,
+            "content": "const data = await response.json();\n  const col = getCityCostOfLiving(data.city);",
+            "explanation": "Found contextual reference containing the keyword 'costofliving'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "55bdd0e4-9d45-43ec-bb42-dc6e577b0e12",
+        "title": "API Endpoint endpoint Exposure",
+        "category": "API",
+        "source_file": "README.md",
+        "line_number": 91,
+        "original_text": "The FastAPI backend exposes the following REST endpoints:",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at requirements.txt:1.",
+        "evidence": [
+          {
+            "id": "cef21f7b-91aa-4533-a272-595be55f3521",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 1,
+            "content": "fastapi==0.141.1",
+            "explanation": "Found Python dependency 'fastapi' specified in requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          }
+        ],
+        "missing_evidence_types": [
+          "SOURCE_CODE (Route Decorator)"
+        ]
+      },
+      {
+        "claim_id": "db7ee504-2654-472b-9a78-6a122c322aef",
+        "title": "API Endpoint /api/courses Exposure",
+        "category": "API",
+        "source_file": "README.md",
+        "line_number": 92,
+        "original_text": "* `GET /api/courses` - Returns available courses.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The route endpoint is successfully defined in the source code at backend/app/routes/calculator.py:109 matching path parameters. No contradictions were found.",
+        "evidence": [
+          {
+            "id": "578fa5c3-630d-4068-bc9d-142c08cd5819",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/routes/calculator.py",
+            "line_number": 109,
+            "content": "@router.get(\n    \"/courses\",\n    response_model=list[str]\n)",
+            "explanation": "Found FastAPI route decorator mapping matching route target 'courses'.",
+            "discovery_method": "route_regex_matching",
+            "confidence": 0.95
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "a913bfc8-aa07-4493-b084-a00d17e7a722",
+        "title": "API Endpoint /api/cities Exposure",
+        "category": "API",
+        "source_file": "README.md",
+        "line_number": 93,
+        "original_text": "* `GET /api/cities` - Returns available capital cities.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The route endpoint is successfully defined in the source code at backend/app/routes/cities.py:10, backend/app/routes/cities.py:23 matching path parameters. No contradictions were found.",
+        "evidence": [
+          {
+            "id": "c35749bb-7619-481b-b883-76486b4e26cb",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/routes/cities.py",
+            "line_number": 10,
+            "content": "router = APIRouter(\n    prefix=\"/api/cities\",\n    tags=[\"Cities\"]",
+            "explanation": "Found APIRouter instantiation defining prefix: '/api/cities'.",
+            "discovery_method": "route_regex_matching",
+            "confidence": 0.95
+          },
+          {
+            "id": "ffb1fc98-224b-4391-8132-c5792769a3fd",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/routes/cities.py",
+            "line_number": 23,
+            "content": "@router.get(\"\")\ndef get_cities(db: Session = Depends(get_db)):\n    statement = (\n        select(CourseCost.city)",
+            "explanation": "Found FastAPI route decorator mapping matching route target 'cities'.",
+            "discovery_method": "route_regex_matching",
+            "confidence": 0.95
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "1f3e2112-c9a2-4d17-99ee-c58c6e1c50d8",
+        "title": "API Endpoint /api/universities Exposure",
+        "category": "API",
+        "source_file": "README.md",
+        "line_number": 94,
+        "original_text": "* `GET /api/universities` - Returns universities, with optional `city` and `course` query parameters.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The route endpoint is successfully defined in the source code at backend/app/routes/universities.py:10, backend/app/routes/universities.py:23 matching path parameters. No contradictions were found.",
+        "evidence": [
+          {
+            "id": "6db8de9e-98a0-4152-b75c-a2d04b609dea",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/routes/universities.py",
+            "line_number": 10,
+            "content": "router = APIRouter(\n    prefix=\"/api/universities\",\n    tags=[\"Universities\"]",
+            "explanation": "Found APIRouter instantiation defining prefix: '/api/universities'.",
+            "discovery_method": "route_regex_matching",
+            "confidence": 0.95
+          },
+          {
+            "id": "b364e871-8073-4e91-9fbb-1f9fdcf44d82",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/routes/universities.py",
+            "line_number": 23,
+            "content": "@router.get(\"\")\ndef get_universities(\n    city: str = Query(...),\n    db: Session = Depends(get_db)",
+            "explanation": "Found FastAPI route decorator mapping matching route target 'universities'.",
+            "discovery_method": "route_regex_matching",
+            "confidence": 0.95
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "2382d6dc-cce7-4a75-822b-40626a1881e6",
+        "title": "API Endpoint /api/course-cost Exposure",
+        "category": "API",
+        "source_file": "README.md",
+        "line_number": 95,
+        "original_text": "* `GET /api/course-cost` - Calculates and returns total cost indices for a combination (`city`, `university`, `course`, `scholarship_percent`).",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The route endpoint is successfully defined in the source code at backend/app/routes/calculator.py:24 matching path parameters. No contradictions were found.",
+        "evidence": [
+          {
+            "id": "420492d4-c5b3-4097-a0f6-3b362b7dd4cf",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/routes/calculator.py",
+            "line_number": 24,
+            "content": "@router.get(\n    \"/course-cost\",\n    response_model=CourseCostResponse\n)",
+            "explanation": "Found FastAPI route decorator mapping matching route target 'course-cost'.",
+            "discovery_method": "route_regex_matching",
+            "confidence": 0.95
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "87f8fc0b-b966-4cbe-acb7-4b2f432b9d13",
+        "title": "API Endpoint /api/course-comparison Exposure",
+        "category": "API",
+        "source_file": "README.md",
+        "line_number": 96,
+        "original_text": "* `GET /api/course-comparison` - Returns other institutional records matching the queried `course` name.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The route endpoint is successfully defined in the source code at backend/app/routes/calculator.py:90 matching path parameters. No contradictions were found.",
+        "evidence": [
+          {
+            "id": "ac726f66-0350-402d-b034-018b6ca67be0",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/routes/calculator.py",
+            "line_number": 90,
+            "content": "@router.get(\n    \"/course-comparison\",\n    response_model=list[CourseCostResponse]\n)",
+            "explanation": "Found FastAPI route decorator mapping matching route target 'course-comparison'.",
+            "discovery_method": "route_regex_matching",
+            "confidence": 0.95
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "8a4e653c-185a-4c26-8ec0-57a357aa0f6d",
+        "title": "Database management system specification",
+        "category": "DATABASE",
+        "source_file": "README.md",
+        "line_number": 133,
+        "original_text": "* PostgreSQL running locally (optional, defaults to hosted Render service if DATABASE_URL is not set)",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "PostgreSQL database configuration was verified by psycopg dependency declared in requirements.txt.",
+        "evidence": [
+          {
+            "id": "f80469ec-d32a-4523-9e61-02def7a077e4",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 4,
+            "content": "psycopg==3.3.4",
+            "explanation": "Found PostgreSQL psycopg driver dependency in Python requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "dc11affc-150b-400f-bba9-3add24ca4aab",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 5,
+            "content": "psycopg-binary==3.3.4",
+            "explanation": "Found PostgreSQL psycopg driver dependency in Python requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "d2a59c84-fb62-4ed4-a02b-be0f488717ed",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 9,
+            "content": "\"DATABASE_URL\",\n    \"postgresql+psycopg://vedantburgul@localhost:5432/gradscope_db\"\n)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "eec0e02c-b7dd-456f-a4df-a609224c560f",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 15,
+            "content": "if DATABASE_URL.startswith(\"postgres://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "5f3eaa05-62bc-4a7b-bdcb-5a6600616bae",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 16,
+            "content": "DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "a7756fe8-015c-4514-b338-f4fc34ed9f0c",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 17,
+            "content": "elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "f8f9e2b2-b303-4661-ad31-a0093c2dc6ae",
+        "title": "Command line utility execution",
+        "category": "COMMAND",
+        "source_file": "README.md",
+        "line_number": 141,
+        "original_text": "   python3 -m venv .venv",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The execution target command configuration or script file was verified at frontend/README.md:12, frontend/README.md:32.",
+        "evidence": [
+          {
+            "id": "f2a7e22d-1fb3-4dc8-a6b2-4bd506b7bc7b",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 12,
+            "content": "The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "4dd932c3-87c7-4df3-9903-cfd2346c139d",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 32,
+            "content": "See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "898ee565-d351-4168-90f2-63aeb56a37b0",
+        "title": "Command line utility execution",
+        "category": "COMMAND",
+        "source_file": "README.md",
+        "line_number": 142,
+        "original_text": "   source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The execution target command configuration or script file was verified at frontend/README.md:12, frontend/README.md:32.",
+        "evidence": [
+          {
+            "id": "7f30cbb9-c7ef-4ade-bd58-88dcc7eb509d",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 12,
+            "content": "The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "88e7f9eb-b9a4-4da3-b288-44451af4c463",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 32,
+            "content": "See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "b7b68812-8c24-4c0a-9f16-0476f56c2cb2",
+        "title": "Command line utility execution",
+        "category": "COMMAND",
+        "source_file": "README.md",
+        "line_number": 147,
+        "original_text": "   pip install -r requirements.txt",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The execution target command configuration or script file was verified at frontend/README.md:12, frontend/README.md:32.",
+        "evidence": [
+          {
+            "id": "18f82070-2d60-4273-aaa3-f5c19e3bf0c3",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 12,
+            "content": "The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "6d773698-2f08-444b-88aa-8348c44d3b69",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 32,
+            "content": "See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "c67ed082-3da9-45c6-8c4e-69d8fc3b7734",
+        "title": "Database management system specification",
+        "category": "DATABASE",
+        "source_file": "README.md",
+        "line_number": 151,
+        "original_text": "   Set `DATABASE_URL` to point to your local PostgreSQL instance (default local fallback is `postgresql+psycopg://username:password@localhost:5432/gradscope_db`):",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "PostgreSQL database configuration was verified by psycopg dependency declared in requirements.txt.",
+        "evidence": [
+          {
+            "id": "1163b3f5-47be-4387-b866-8aaffee91992",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 4,
+            "content": "psycopg==3.3.4",
+            "explanation": "Found PostgreSQL psycopg driver dependency in Python requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "a4005167-c999-4468-a9ad-bc30c52f24fc",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 5,
+            "content": "psycopg-binary==3.3.4",
+            "explanation": "Found PostgreSQL psycopg driver dependency in Python requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "c7c935c9-a663-4133-b6de-11d5a1ee3d7f",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 9,
+            "content": "\"DATABASE_URL\",\n    \"postgresql+psycopg://vedantburgul@localhost:5432/gradscope_db\"\n)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "3543b4c8-7d4d-467a-939a-49eac1cf0983",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 15,
+            "content": "if DATABASE_URL.startswith(\"postgres://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "759887ea-991c-439b-ac66-ed1bf0b32e37",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 16,
+            "content": "DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "1e100457-308d-4c48-b8d7-c86ddefc1671",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 17,
+            "content": "elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "39d6c80b-ebe5-4add-8aef-91bf9e09dda5",
+        "title": "Command line utility execution",
+        "category": "COMMAND",
+        "source_file": "README.md",
+        "line_number": 153,
+        "original_text": "   export DATABASE_URL=\"postgresql+psycopg://username:password@localhost:5432/db_name\"",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The execution target command configuration or script file was verified at requirements.txt:4, requirements.txt:5, backend/app/database.py:9, backend/app/database.py:15, backend/app/database.py:16, backend/app/database.py:17.",
+        "evidence": [
+          {
+            "id": "fc2e39a9-965d-47c9-a302-14ba4883b7ca",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 4,
+            "content": "psycopg==3.3.4",
+            "explanation": "Found PostgreSQL psycopg driver dependency in Python requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "a2835625-1c94-41d3-bc7a-c9800fbacd47",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "requirements.txt",
+            "line_number": 5,
+            "content": "psycopg-binary==3.3.4",
+            "explanation": "Found PostgreSQL psycopg driver dependency in Python requirements.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "f3e00863-b4e6-4fbb-8af2-082553be2662",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 9,
+            "content": "\"DATABASE_URL\",\n    \"postgresql+psycopg://vedantburgul@localhost:5432/gradscope_db\"\n)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "55232687-42d6-4ecd-9b39-a2ba2647958a",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 15,
+            "content": "if DATABASE_URL.startswith(\"postgres://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "6a1a099c-422e-41f7-8609-0918758e1e02",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 16,
+            "content": "DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          },
+          {
+            "id": "aaf87cf4-a295-485d-bcb1-7b9f6139674b",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 17,
+            "content": "elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection URI or instantiation code.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.95
+          }
+        ],
+        "missing_evidence_types": [
+          "CONFIGURATION (package.json script)"
+        ]
+      },
+      {
+        "claim_id": "13d8b9f0-7870-402d-aed2-5444c4c5e077",
+        "title": "Database management system specification",
+        "category": "DATABASE",
+        "source_file": "README.md",
+        "line_number": 156,
+        "original_text": "4. **Initialize & Seed the Database:**",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "PostgreSQL database configuration was verified by psycopg dependency declared in requirements.txt.",
+        "evidence": [
+          {
+            "id": "94a47330-654a-4f6b-9d98-f41277c39133",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 9,
+            "content": "\"DATABASE_URL\",\n    \"postgresql+psycopg://vedantburgul@localhost:5432/gradscope_db\"\n)",
+            "explanation": "Found PostgreSQL connection setup, which provides contradictory context for a non-PostgreSQL DB claim.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "8d321caf-a6d8-4cd9-9c93-fd6564002c85",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 15,
+            "content": "if DATABASE_URL.startswith(\"postgres://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):",
+            "explanation": "Found PostgreSQL connection setup, which provides contradictory context for a non-PostgreSQL DB claim.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "6ac37578-8d17-4ac9-afd5-5f7b638429f6",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 16,
+            "content": "DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection setup, which provides contradictory context for a non-PostgreSQL DB claim.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "40f6ce83-2bfe-4ddf-a33a-040469b58e2f",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 17,
+            "content": "elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection setup, which provides contradictory context for a non-PostgreSQL DB claim.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          }
+        ],
+        "missing_evidence_types": [
+          "DEPENDENCY (Database Driver)"
+        ]
+      },
+      {
+        "claim_id": "5b3a964d-ca87-4b88-bd3b-093e241d4151",
+        "title": "Command line utility execution",
+        "category": "COMMAND",
+        "source_file": "README.md",
+        "line_number": 158,
+        "original_text": "   python -m backend.app.seed",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The execution target command configuration or script file was verified at backend/app/seed.py:1.",
+        "evidence": [
+          {
+            "id": "89e551ee-62d6-4d23-aad9-bbf39e730fcc",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/seed.py",
+            "line_number": 1,
+            "content": "# Module backend.app.seed exists",
+            "explanation": "Found seeder or runner script file corresponding to command module 'backend.app.seed'.",
+            "discovery_method": "file_presence_check",
+            "confidence": 0.9
+          }
+        ],
+        "missing_evidence_types": [
+          "CONFIGURATION (package.json script)"
+        ]
+      },
+      {
+        "claim_id": "fb0504d2-c46f-4a00-be05-7d89c89cc03f",
+        "title": "Command line utility execution",
+        "category": "COMMAND",
+        "source_file": "README.md",
+        "line_number": 163,
+        "original_text": "   uvicorn backend.app.main:app --reload",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The execution target command configuration or script file was verified at frontend/README.md:12, frontend/README.md:32.",
+        "evidence": [
+          {
+            "id": "0a13fcc5-1d6c-4b26-acd4-b6c63c7d9fef",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 12,
+            "content": "The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "2112390e-0b85-476c-b5aa-88472be3735d",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 32,
+            "content": "See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "5ea81315-ea24-4725-9cb9-da8b2e0386ad",
+        "title": "Command line utility execution",
+        "category": "COMMAND",
+        "source_file": "README.md",
+        "line_number": 173,
+        "original_text": "   cd frontend",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The execution target command configuration or script file was verified at frontend/README.md:12, frontend/README.md:32.",
+        "evidence": [
+          {
+            "id": "41742da1-5733-4851-8054-93be685463ae",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 12,
+            "content": "The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "2455bf4c-d07b-4f2a-bb81-3152da3b416b",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 32,
+            "content": "See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "ca3bbc1e-2d64-4962-9db2-8ff4e13bbe0b",
+        "title": "Command line utility execution",
+        "category": "COMMAND",
+        "source_file": "README.md",
+        "line_number": 178,
+        "original_text": "   npm install",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The execution target command configuration or script file was verified at frontend/README.md:12, frontend/README.md:32.",
+        "evidence": [
+          {
+            "id": "d6fb71be-f2a4-49b1-bf07-bb2ea42a86a4",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 12,
+            "content": "The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "e62f96d7-11c4-46d3-ad46-e270ed3a4740",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/README.md",
+            "line_number": 32,
+            "content": "See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.",
+            "explanation": "Found contextual reference containing the keyword 'documentation'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "ca6511c0-39dc-4276-9042-1c43d763ccc3",
+        "title": "Configuration metadata specification",
+        "category": "CONFIGURATION",
+        "source_file": "README.md",
+        "line_number": 182,
+        "original_text": "   Vite automatically defaults to the production backend. If you want to connect to a local backend, create a `frontend/.env.local` file:",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at frontend/package.json:7.",
+        "evidence": [
+          {
+            "id": "40d299da-9838-44ec-84a0-2a652e81a2f1",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 7,
+            "content": "\"dev\": \"vite\",",
+            "explanation": "Found NPM package dependency 'vite' version ^8.2.0 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "77b2dc41-8b5c-4c4e-99e4-da1f91a6df5c",
+        "title": "Command line utility execution",
+        "category": "COMMAND",
+        "source_file": "README.md",
+        "line_number": 189,
+        "original_text": "   npm run dev",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The execution target command configuration or script file was verified at frontend/package.json:7.",
+        "evidence": [
+          {
+            "id": "e467d141-07ff-41ed-b608-15be42147e25",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/package.json",
+            "line_number": 7,
+            "content": "\"dev\": \"vite\",",
+            "explanation": "Found script configuration for 'dev' containing run target: 'vite'",
+            "discovery_method": "package_script_inspection",
+            "confidence": 0.95
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "f578dd8d-6aa7-4cae-80d2-2d4ed76d1db5",
+        "title": "Command line utility execution",
+        "category": "COMMAND",
+        "source_file": "README.md",
+        "line_number": 195,
+        "original_text": "   npm run build",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.95,
+        "explanation": "The execution target command configuration or script file was verified at frontend/package.json:8.",
+        "evidence": [
+          {
+            "id": "8030452c-371e-4f35-9d65-138e5aaee695",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "frontend/package.json",
+            "line_number": 8,
+            "content": "\"build\": \"tsc -b && vite build\",",
+            "explanation": "Found script configuration for 'build' containing run target: 'tsc -b && vite build'",
+            "discovery_method": "package_script_inspection",
+            "confidence": 0.95
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "6403ec33-f0ad-489b-92ab-d58f4d7dd1c0",
+        "title": "Database management system specification",
+        "category": "DATABASE",
+        "source_file": "README.md",
+        "line_number": 213,
+        "original_text": "* **Limited Selections:** The database is limited to 68 validated course/city/university combinations.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "PostgreSQL database configuration was verified by psycopg dependency declared in requirements.txt.",
+        "evidence": [
+          {
+            "id": "0b3bad0a-5fa0-4771-940b-09617673b5ff",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 9,
+            "content": "\"DATABASE_URL\",\n    \"postgresql+psycopg://vedantburgul@localhost:5432/gradscope_db\"\n)",
+            "explanation": "Found PostgreSQL connection setup, which provides contradictory context for a non-PostgreSQL DB claim.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "848ab59b-ed94-4d2e-85cc-a084ae8e1e1f",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 15,
+            "content": "if DATABASE_URL.startswith(\"postgres://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):",
+            "explanation": "Found PostgreSQL connection setup, which provides contradictory context for a non-PostgreSQL DB claim.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "b92ac70b-c553-4a52-9ee4-7434c347fcd2",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 16,
+            "content": "DATABASE_URL = DATABASE_URL.replace(\"postgres://\", \"postgresql+psycopg://\", 1)\n    elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection setup, which provides contradictory context for a non-PostgreSQL DB claim.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "83726bbd-0199-4e48-ae15-8dcc66fd4396",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/database.py",
+            "line_number": 17,
+            "content": "elif DATABASE_URL.startswith(\"postgresql://\"):\n        DATABASE_URL = DATABASE_URL.replace(\"postgresql://\", \"postgresql+psycopg://\", 1)",
+            "explanation": "Found PostgreSQL connection setup, which provides contradictory context for a non-PostgreSQL DB claim.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          }
+        ],
+        "missing_evidence_types": [
+          "DEPENDENCY (Database Driver)"
+        ]
+      },
+      {
+        "claim_id": "355b9619-f876-4fe5-8057-85fdc6fe2ccf",
+        "title": "Configuration metadata specification",
+        "category": "CONFIGURATION",
+        "source_file": "README.md",
+        "line_number": 220,
+        "original_text": "* **Extended Program Support:** Expand datasets to encompass Bachelor's (undergraduate) and PhD research study models.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at README.md:220.",
+        "evidence": [
+          {
+            "id": "9bf71795-cb28-4ac5-952a-d45eaaf81d4c",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 220,
+            "content": "* **Extended Program Support:** Expand datasets to encompass Bachelor's (undergraduate) and PhD research study models.\n* **Wizard State Retention:** Integrate `localStorage` or session persistence to retain study selections upon page refresh.",
+            "explanation": "Found contextual reference containing the keyword 'extended'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "25e6769c-371e-4c07-b52a-3642027d0d23",
+        "title": "Software engineering dependency",
+        "category": "DEPENDENCY",
+        "source_file": "frontend/README.md",
+        "line_number": 3,
+        "original_text": "This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at frontend/package.json:15, frontend/package.json:9, frontend/package.json:7.",
+        "evidence": [
+          {
+            "id": "14ff0ade-7af9-4c13-aa85-93cdd1bbcd65",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 15,
+            "content": "\"react\": \"^19.2.8\",",
+            "explanation": "Found NPM package dependency 'react' version ^19.2.8 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "26c16428-15bf-472d-8d9d-8a09792a7c18",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 9,
+            "content": "\"lint\": \"oxlint\",",
+            "explanation": "Found NPM package dependency 'oxlint' version ^1.75.0 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "0562e21f-53b3-42f3-b7f2-5fe53826599d",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 7,
+            "content": "\"dev\": \"vite\",",
+            "explanation": "Found NPM package dependency 'vite' version ^8.2.0 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "28450195-0e70-49d6-8960-8000fb175ae7",
+        "title": "Technical prose assertion",
+        "category": "OTHER",
+        "source_file": "frontend/README.md",
+        "line_number": 7,
+        "original_text": "- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at frontend/package.json:15, frontend/package.json:25, frontend/package.json:7.",
+        "evidence": [
+          {
+            "id": "c65cbab1-8d20-4863-842c-e3cf7561c33e",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 15,
+            "content": "\"react\": \"^19.2.8\",",
+            "explanation": "Found NPM package dependency 'react' version ^19.2.8 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "5f82d5e6-c76d-4caa-a97a-f6b13218d2ad",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 25,
+            "content": "\"@vitejs/plugin-react\": \"^6.0.4\",",
+            "explanation": "Found NPM package dependency '@vitejs/plugin-react' version ^6.0.4 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "c555f3d1-2224-4498-add2-80d4a5d84a1d",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 7,
+            "content": "\"dev\": \"vite\",",
+            "explanation": "Found NPM package dependency 'vite' version ^8.2.0 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "f857d8f9-6f9c-46d3-ba5c-973d40b72772",
+        "title": "Technical prose assertion",
+        "category": "OTHER",
+        "source_file": "frontend/README.md",
+        "line_number": 8,
+        "original_text": "- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at frontend/package.json:15, frontend/package.json:25, frontend/package.json:7.",
+        "evidence": [
+          {
+            "id": "6ab87fb6-c338-4b05-a4bb-1fa6e2954ea5",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 15,
+            "content": "\"react\": \"^19.2.8\",",
+            "explanation": "Found NPM package dependency 'react' version ^19.2.8 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "bbdf9343-f4a6-42ee-ae76-97a7ce0163db",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 25,
+            "content": "\"@vitejs/plugin-react\": \"^6.0.4\",",
+            "explanation": "Found NPM package dependency '@vitejs/plugin-react' version ^6.0.4 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          },
+          {
+            "id": "62e153d9-26d3-478d-95e1-050a6119c1ff",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 7,
+            "content": "\"dev\": \"vite\",",
+            "explanation": "Found NPM package dependency 'vite' version ^8.2.0 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "8524efdc-6aa6-4c8b-a4b0-81e0a05d4235",
+        "title": "Software engineering dependency",
+        "category": "DEPENDENCY",
+        "source_file": "frontend/README.md",
+        "line_number": 12,
+        "original_text": "The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at frontend/package.json:15.",
+        "evidence": [
+          {
+            "id": "3c0b5b33-beaa-4b10-bf5f-b194854d4d14",
+            "relationship": "SUPPORTS",
+            "source_type": "DEPENDENCY",
+            "file_path": "frontend/package.json",
+            "line_number": 15,
+            "content": "\"react\": \"^19.2.8\",",
+            "explanation": "Found NPM package dependency 'react' version ^19.2.8 in configuration.",
+            "discovery_method": "dependency_parsing",
+            "confidence": 1.0
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "c92a65f0-33ca-47bd-b9c5-8cd8310d203f",
+        "title": "Data file reference: lifecostdata.csv",
+        "category": "CONFIGURATION",
+        "source_file": "data/source_map.md",
+        "line_number": 113,
+        "original_text": "Every actual cost observation must record its source in lifecost_data.csv.",
+        "verdict": "VERIFIED",
+        "truth_confidence": 0.85,
+        "explanation": "Supporting repository evidence (dependencies or tokens) was located at data/source_map.md:48, data/source_map.md:113.",
+        "evidence": [
+          {
+            "id": "2bfaf2ca-39b5-4250-b8ae-ed38fb76c748",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "data/source_map.md",
+            "line_number": 48,
+            "content": "- Year: 2026\n- Every observation must have a source.\n- Raw source values must not be invented.",
+            "explanation": "Found contextual reference containing the keyword 'every'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "3e217e35-82a2-4a9d-8381-e8fcf222a25a",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "data/source_map.md",
+            "line_number": 113,
+            "content": "Every actual cost observation must record its source in lifecost_data.csv.",
+            "explanation": "Found contextual reference containing the keyword 'every'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      }
+    ],
+    "uncertain": [
+      {
+        "claim_id": "e832b07f-6388-4722-b247-a316a6f1a4a9",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "README.md",
+        "line_number": 3,
+        "original_text": "An interactive study-planning financial calculator helping international students compare Master's program tuition, scholarships, and city-level living costs in Australia.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "c0bc4847-655f-4a4d-a70c-cc738a79d9a2",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 3,
+            "content": "An interactive study-planning financial calculator helping international students compare Master's program tuition, scholarships, and city-level living costs in Australia.",
+            "explanation": "Found contextual reference containing the keyword 'interactive'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "91c6a7bc-af01-44e7-af66-8c136202cdb8",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 32,
+            "content": "* **4-Step Configure Your Study Plan Wizard:** Interactive stepper guiding users to select a Course, City, University, and enter/configure an Expected Scholarship percentage.\n* **Dynamic Viewport Stepper Transitions:** Planner page automatically center-scrolls to the next active step upon selection to guide the user seamlessly through the flow.",
+            "explanation": "Found contextual reference containing the keyword 'interactive'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "9b0cc667-0c25-4ea9-83c4-a7caa4a22d90",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 35,
+            "content": "* **\"Where Your Total Comes From\" Cost Breakdown Card:** A clear comparative dashboard showing the cumulative program cost *Without Scholarship* vs. *With Scholarship*, highlighting net payable tuition and program-length savings.\n* **Interactive Financial Visualization Charts:**\n  * **Tuition vs. Living Expenses Split (Pie/Donut Chart):** Visualizes how much of the budget is allocated to study vs. living.",
+            "explanation": "Found contextual reference containing the keyword 'interactive'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "68821ef3-e640-4e6e-82d6-0af5ea26c40c",
+        "title": "Mathematical model behavior",
+        "category": "BEHAVIOR",
+        "source_file": "README.md",
+        "line_number": 17,
+        "original_text": "When researching international study opportunities, students are typically presented with tuition fees in isolation. This creates significant financial blind spots:",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "374ee500-2dbe-4720-8c36-2c754c37b3cc",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 17,
+            "content": "When researching international study opportunities, students are typically presented with tuition fees in isolation. This creates significant financial blind spots:\n* **Hidden Local Costs:** Living expenses vary greatly between capital cities (e.g., Sydney vs. Hobart).",
+            "explanation": "Found contextual reference containing the keyword 'researching'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "b6f8c572-6a2a-454e-a55f-f80422c80634",
+        "title": "Mathematical model behavior",
+        "category": "BEHAVIOR",
+        "source_file": "README.md",
+        "line_number": 19,
+        "original_text": "* **Varying Durations:** Different Master's programs take between 1 to 2+ years, scaling both living expenses and overall tuition requirements differently.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "686c7d3b-7b39-4e85-a1a6-b26aa72714ae",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 19,
+            "content": "* **Hidden Local Costs:** Living expenses vary greatly between capital cities (e.g., Sydney vs. Hobart).\n* **Varying Durations:** Different Master's programs take between 1 to 2+ years, scaling both living expenses and overall tuition requirements differently.\n* **Scholarship Complexity:** Calculating the net tuition after a scholarship discount and combining it with local cost indices over the exact duration is complex and prone to errors.",
+            "explanation": "Found contextual reference containing the keyword 'varying'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "bca3ab4b-ccb0-4690-ade5-5b8371a0bab4",
+        "title": "Mathematical model behavior",
+        "category": "BEHAVIOR",
+        "source_file": "README.md",
+        "line_number": 20,
+        "original_text": "* **Scholarship Complexity:** Calculating the net tuition after a scholarship discount and combining it with local cost indices over the exact duration is complex and prone to errors.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "6857d94f-2c8d-4403-9f76-bd6e8aa0a954",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 3,
+            "content": "An interactive study-planning financial calculator helping international students compare Master's program tuition, scholarships, and city-level living costs in Australia.",
+            "explanation": "Found contextual reference containing the keyword 'scholarship'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "bd7f6edc-983b-41f7-b1ae-25654e318dd4",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 11,
+            "content": "GradScope is a full-stack decision-support platform designed to help prospective international students plan their Master's education in Australia. By combining tuition fees, scholarship packages, program durations, and localized consumer indexes (rent, groceries, transit, utilities), the platform provides students with a single, clear estimated program-length baseline. This allows users to compare options across different cities and universities using a consistent cost baseline.",
+            "explanation": "Found contextual reference containing the keyword 'scholarship'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "4bfcfbde-f95b-4cf8-a61e-6fed2fee74a2",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 20,
+            "content": "* **Varying Durations:** Different Master's programs take between 1 to 2+ years, scaling both living expenses and overall tuition requirements differently.\n* **Scholarship Complexity:** Calculating the net tuition after a scholarship discount and combining it with local cost indices over the exact duration is complex and prone to errors.",
+            "explanation": "Found contextual reference containing the keyword 'scholarship'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "9a1cfb27-1103-4f3f-9421-8f5714b9b112",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "README.md",
+        "line_number": 32,
+        "original_text": "* **4-Step Configure Your Study Plan Wizard:** Interactive stepper guiding users to select a Course, City, University, and enter/configure an Expected Scholarship percentage.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.9,
+        "explanation": "No evidence was found in the repository to verify this claim. The category 'FEATURE' has no matching code, tests, or configurations.",
+        "evidence": [],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "67e5a8ff-c885-4628-b3c5-9c9019bc62b3",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "README.md",
+        "line_number": 33,
+        "original_text": "* **Dynamic Viewport Stepper Transitions:** Planner page automatically center-scrolls to the next active step upon selection to guide the user seamlessly through the flow.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "c1cf21ee-eeb4-4d97-b310-e24ad4b4c9c4",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 33,
+            "content": "* **4-Step Configure Your Study Plan Wizard:** Interactive stepper guiding users to select a Course, City, University, and enter/configure an Expected Scholarship percentage.\n* **Dynamic Viewport Stepper Transitions:** Planner page automatically center-scrolls to the next active step upon selection to guide the user seamlessly through the flow.\n* **\"Where Your Total Comes From\" Cost Breakdown Card:** A clear comparative dashboard showing the cumulative program cost *Without Scholarship* vs. *With Scholarship*, highlighting net payable tuition and program-length savings.",
+            "explanation": "Found contextual reference containing the keyword 'dynamic'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "bc0cdb38-6721-45b9-a674-9eca4b6d77e8",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 39,
+            "content": "* **Monthly Expenses Breakdown (Horizontal Bar Chart):** Breaks down the monthly living baseline into Housing, Food, Transit, and Utilities.\n* **Detailed Expandable Accordions:** Displays itemized grocery and utility costs dynamically mapped to the target city.\n* **Institutional Comparison Table:** Compares the selected course against other universities across Australia offering the same program, showing comparative tuition, living, and total costs side-by-side.",
+            "explanation": "Found contextual reference containing the keyword 'dynamic'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "6f90ea5f-f6d4-4b01-92b8-93ea2a30e669",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 106,
+            "content": "\u2502       \u251c\u2500\u2500 routes/          # API endpoint controllers (calculator, cities, universities)\n\u2502       \u251c\u2500\u2500 database.py      # SQLAlchemy connection, dynamic SSL & scheme parsing\n\u2502       \u251c\u2500\u2500 main.py          # FastAPI application initialization & CORS config",
+            "explanation": "Found contextual reference containing the keyword 'dynamic'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "442c2cdc-9e87-4e14-a8c7-294cfc35761d",
+        "title": "Mathematical model behavior",
+        "category": "BEHAVIOR",
+        "source_file": "README.md",
+        "line_number": 34,
+        "original_text": "* **\"Where Your Total Comes From\" Cost Breakdown Card:** A clear comparative dashboard showing the cumulative program cost *Without Scholarship* vs. *With Scholarship*, highlighting net payable tuition and program-length savings.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "482b76e4-447a-41a5-8a3c-da2c93492db6",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 34,
+            "content": "* **Dynamic Viewport Stepper Transitions:** Planner page automatically center-scrolls to the next active step upon selection to guide the user seamlessly through the flow.\n* **\"Where Your Total Comes From\" Cost Breakdown Card:** A clear comparative dashboard showing the cumulative program cost *Without Scholarship* vs. *With Scholarship*, highlighting net payable tuition and program-length savings.\n* **Interactive Financial Visualization Charts:**",
+            "explanation": "Found contextual reference containing the keyword 'where'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "43256f0d-b1b9-4367-9357-c4ba37e69568",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 47,
+            "content": "1. **Step 1: Select Course:** Choose from postgraduate programs (e.g., Master of Data Science).\n2. **Step 2: Select City:** Select from capital cities where the program is offered (e.g., Melbourne, Sydney, Adelaide).\n3. **Step 3: Choose University:** Pick the specific university (e.g., RMIT, Monash University).",
+            "explanation": "Found contextual reference containing the keyword 'where'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "e503a8f7-c0db-4f17-9c6e-f697d62f1b86",
+            "relationship": "CONTEXTUAL",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/routes/universities.py",
+            "line_number": 33,
+            "content": ")\n        .where(CourseCost.city == city)\n        .order_by(",
+            "explanation": "Found contextual reference containing the keyword 'where'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "721e2dc9-2cfb-4300-8448-84fa6302369d",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "README.md",
+        "line_number": 35,
+        "original_text": "* **Interactive Financial Visualization Charts:**",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "0ea9ecaa-b8b2-4e03-8b66-28ff7c0037b6",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 3,
+            "content": "An interactive study-planning financial calculator helping international students compare Master's program tuition, scholarships, and city-level living costs in Australia.",
+            "explanation": "Found contextual reference containing the keyword 'interactive'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "6bab4348-aa3f-4426-b3dd-caad2ce3a311",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 32,
+            "content": "* **4-Step Configure Your Study Plan Wizard:** Interactive stepper guiding users to select a Course, City, University, and enter/configure an Expected Scholarship percentage.\n* **Dynamic Viewport Stepper Transitions:** Planner page automatically center-scrolls to the next active step upon selection to guide the user seamlessly through the flow.",
+            "explanation": "Found contextual reference containing the keyword 'interactive'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "6e4052bf-0ca4-40bd-8c36-14aff8766fe6",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 35,
+            "content": "* **\"Where Your Total Comes From\" Cost Breakdown Card:** A clear comparative dashboard showing the cumulative program cost *Without Scholarship* vs. *With Scholarship*, highlighting net payable tuition and program-length savings.\n* **Interactive Financial Visualization Charts:**\n  * **Tuition vs. Living Expenses Split (Pie/Donut Chart):** Visualizes how much of the budget is allocated to study vs. living.",
+            "explanation": "Found contextual reference containing the keyword 'interactive'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "9ad5270f-fb6b-4eb7-b457-5968a1646cbc",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "README.md",
+        "line_number": 36,
+        "original_text": "  * **Tuition vs. Living Expenses Split (Pie/Donut Chart):** Visualizes how much of the budget is allocated to study vs. living.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "1bc29dfb-6290-41bc-bfa9-b38381146b8a",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 3,
+            "content": "An interactive study-planning financial calculator helping international students compare Master's program tuition, scholarships, and city-level living costs in Australia.",
+            "explanation": "Found contextual reference containing the keyword 'tuition'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "e4eb2832-73d7-43b4-a057-6530305c0b02",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 11,
+            "content": "GradScope is a full-stack decision-support platform designed to help prospective international students plan their Master's education in Australia. By combining tuition fees, scholarship packages, program durations, and localized consumer indexes (rent, groceries, transit, utilities), the platform provides students with a single, clear estimated program-length baseline. This allows users to compare options across different cities and universities using a consistent cost baseline.",
+            "explanation": "Found contextual reference containing the keyword 'tuition'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "bb84a4ac-e159-41ac-a782-df6afebd5c11",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 17,
+            "content": "When researching international study opportunities, students are typically presented with tuition fees in isolation. This creates significant financial blind spots:\n* **Hidden Local Costs:** Living expenses vary greatly between capital cities (e.g., Sydney vs. Hobart).",
+            "explanation": "Found contextual reference containing the keyword 'tuition'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "eb47621b-5142-45ec-929b-74142fdeb282",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "README.md",
+        "line_number": 37,
+        "original_text": "  * **Annual Cost Ratio (Bar Chart):** Compares the tuition fee to living costs on an annual basis.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "7f4d69d3-653d-4022-bd69-80df1ddc50bd",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 37,
+            "content": "* **Tuition vs. Living Expenses Split (Pie/Donut Chart):** Visualizes how much of the budget is allocated to study vs. living.\n  * **Annual Cost Ratio (Bar Chart):** Compares the tuition fee to living costs on an annual basis.\n  * **Monthly Expenses Breakdown (Horizontal Bar Chart):** Breaks down the monthly living baseline into Housing, Food, Transit, and Utilities.",
+            "explanation": "Found contextual reference containing the keyword 'annual'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "f65dda04-0564-4058-8aa9-680bc5280fa8",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 58,
+            "content": "$$\\text{Total Tuition (Before Scholarship)} = \\text{Annual Tuition Fee} \\times \\text{Program Duration (Years)}$$",
+            "explanation": "Found contextual reference containing the keyword 'annual'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "e0684fff-3129-4675-bb60-60b42ad74746",
+            "relationship": "CONTEXTUAL",
+            "source_type": "SOURCE_CODE",
+            "file_path": "frontend/src/types/index.ts",
+            "line_number": 7,
+            "content": "durationYears: number | null;\n  annualTuitionFeeAud: number | null; // Null if unavailable\n  feeYear: number;",
+            "explanation": "Found contextual reference containing the keyword 'annual'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "b07d104a-7f1d-453a-abf8-e7e80c8a7347",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "README.md",
+        "line_number": 39,
+        "original_text": "* **Detailed Expandable Accordions:** Displays itemized grocery and utility costs dynamically mapped to the target city.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "574a8b01-b527-4646-9fc8-7952c084c3a8",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 39,
+            "content": "* **Monthly Expenses Breakdown (Horizontal Bar Chart):** Breaks down the monthly living baseline into Housing, Food, Transit, and Utilities.\n* **Detailed Expandable Accordions:** Displays itemized grocery and utility costs dynamically mapped to the target city.\n* **Institutional Comparison Table:** Compares the selected course against other universities across Australia offering the same program, showing comparative tuition, living, and total costs side-by-side.",
+            "explanation": "Found contextual reference containing the keyword 'detailed'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "2a43145c-d7e3-4068-9259-274b45c94246",
+            "relationship": "CONTEXTUAL",
+            "source_type": "SOURCE_CODE",
+            "file_path": "frontend/src/services/dataService.ts",
+            "line_number": 753,
+            "content": "// Calculate detailed Food monthly cost\n  const foodItems = Object.entries(FOOD_QUANTITIES).map(([name, quantity]) => {",
+            "explanation": "Found contextual reference containing the keyword 'detailed'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "c9fed14d-2ea9-4da3-b44f-f041fef711a5",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "README.md",
+        "line_number": 40,
+        "original_text": "* **Institutional Comparison Table:** Compares the selected course against other universities across Australia offering the same program, showing comparative tuition, living, and total costs side-by-side.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "85865af0-b57c-4110-8188-6d6bc953a58e",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 40,
+            "content": "* **Detailed Expandable Accordions:** Displays itemized grocery and utility costs dynamically mapped to the target city.\n* **Institutional Comparison Table:** Compares the selected course against other universities across Australia offering the same program, showing comparative tuition, living, and total costs side-by-side.",
+            "explanation": "Found contextual reference containing the keyword 'institutional'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "d0fc67d6-59b0-42b3-b7cd-2e7eb263b8d5",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 96,
+            "content": "* `GET /api/course-cost` - Calculates and returns total cost indices for a combination (`city`, `university`, `course`, `scholarship_percent`).\n* `GET /api/course-comparison` - Returns other institutional records matching the queried `course` name.",
+            "explanation": "Found contextual reference containing the keyword 'institutional'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "ceb3dbc1-b383-4127-9b7f-10c700f2873a",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "README.md",
+        "line_number": 50,
+        "original_text": "5. **Estimate:** Get the comprehensive cost breakdown and comparison charts instantly.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "292412c5-b373-4431-bb6a-0fec794b253a",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 11,
+            "content": "GradScope is a full-stack decision-support platform designed to help prospective international students plan their Master's education in Australia. By combining tuition fees, scholarship packages, program durations, and localized consumer indexes (rent, groceries, transit, utilities), the platform provides students with a single, clear estimated program-length baseline. This allows users to compare options across different cities and universities using a consistent cost baseline.",
+            "explanation": "Found contextual reference containing the keyword 'estimate'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "feb4367d-e24d-47b8-860a-dd77f5e05e2a",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 50,
+            "content": "4. **Step 4: Configure Scholarship:** Enter your expected scholarship percentage (0% to 100%) or use quick presets.\n5. **Estimate:** Get the comprehensive cost breakdown and comparison charts instantly.",
+            "explanation": "Found contextual reference containing the keyword 'estimate'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "404ad3f7-a9a5-4b89-a678-1c340725fe05",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 66,
+            "content": "$$\\text{Estimated Master's Cost} = \\text{Tuition After Scholarship} + \\text{Living Costs}$$",
+            "explanation": "Found contextual reference containing the keyword 'estimate'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "eb7b2c53-cd6a-40f0-a943-e4415728a44f",
+        "title": "Mathematical model behavior",
+        "category": "BEHAVIOR",
+        "source_file": "README.md",
+        "line_number": 58,
+        "original_text": "$$\\text{Total Tuition (Before Scholarship)} = \\text{Annual Tuition Fee} \\times \\text{Program Duration (Years)}$$",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.9,
+        "explanation": "No evidence was found in the repository to verify this claim. The category 'BEHAVIOR' has no matching code, tests, or configurations.",
+        "evidence": [],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "477cada8-1324-41e4-84b3-e239e92779ca",
+        "title": "Mathematical model behavior",
+        "category": "BEHAVIOR",
+        "source_file": "README.md",
+        "line_number": 60,
+        "original_text": "$$\\text{Scholarship Savings} = \\text{Total Tuition (Before Scholarship)} \\times \\left(\\frac{\\text{Scholarship Percentage}}{100}\\right)$$",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.9,
+        "explanation": "No evidence was found in the repository to verify this claim. The category 'BEHAVIOR' has no matching code, tests, or configurations.",
+        "evidence": [],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "488959ed-cee6-42ba-baa1-4a304a98d6e1",
+        "title": "Mathematical model behavior",
+        "category": "BEHAVIOR",
+        "source_file": "README.md",
+        "line_number": 62,
+        "original_text": "$$\\text{Tuition After Scholarship} = \\text{Total Tuition (Before Scholarship)} - \\text{Scholarship Savings}$$",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.9,
+        "explanation": "No evidence was found in the repository to verify this claim. The category 'BEHAVIOR' has no matching code, tests, or configurations.",
+        "evidence": [],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "6297cb07-bd7f-49e7-8223-b70a0ab31a23",
+        "title": "Mathematical model behavior",
+        "category": "BEHAVIOR",
+        "source_file": "README.md",
+        "line_number": 64,
+        "original_text": "$$\\text{Living Costs} = \\text{Monthly Living Cost} \\times 12 \\times \\text{Program Duration (Years)}$$",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.9,
+        "explanation": "No evidence was found in the repository to verify this claim. The category 'BEHAVIOR' has no matching code, tests, or configurations.",
+        "evidence": [],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "a35ab378-a9e8-4ebd-bca3-46154e01ae3b",
+        "title": "Mathematical model behavior",
+        "category": "BEHAVIOR",
+        "source_file": "README.md",
+        "line_number": 66,
+        "original_text": "$$\\text{Estimated Master's Cost} = \\text{Tuition After Scholarship} + \\text{Living Costs}$$",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.9,
+        "explanation": "No evidence was found in the repository to verify this claim. The category 'BEHAVIOR' has no matching code, tests, or configurations.",
+        "evidence": [],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "158d9e11-638e-4a19-9307-4089e39db2b2",
+        "title": "Software engineering dependency",
+        "category": "DEPENDENCY",
+        "source_file": "README.md",
+        "line_number": 75,
+        "original_text": "* **Data Processing & Analysis:** Pandas, Python CSV library, Jupyter Notebooks.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "87b3fc3a-338d-4477-9b03-d5be6463acfd",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 75,
+            "content": "* **Database:** PostgreSQL, psycopg v3.\n* **Data Processing & Analysis:** Pandas, Python CSV library, Jupyter Notebooks.\n* **Hosting:** Netlify (Frontend), Render (FastAPI Backend + PostgreSQL Database).",
+            "explanation": "Found contextual reference containing the keyword 'processing'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "a5917071-3ae2-46da-9c15-7badef8725c0",
+        "title": "Environment prerequisite installation",
+        "category": "INSTALLATION",
+        "source_file": "README.md",
+        "line_number": 131,
+        "original_text": "* Node.js (v18+) & npm",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.9,
+        "explanation": "No evidence was found in the repository to verify this claim. The category 'INSTALLATION' has no matching code, tests, or configurations.",
+        "evidence": [],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "a22e35c1-d83a-43b4-9a76-c890560d76d8",
+        "title": "Environment prerequisite installation",
+        "category": "INSTALLATION",
+        "source_file": "README.md",
+        "line_number": 132,
+        "original_text": "* Python (v3.10+)",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "b3079a7f-5fb6-40dc-b3fa-bdfc65221476",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 73,
+            "content": "* **Frontend:** React 18, Vite, TypeScript, Tailwind CSS, Framer Motion, Recharts, Lucide React.\n* **Backend:** FastAPI (Python), SQLAlchemy 2.0 (ORM), Pydantic, Uvicorn.\n* **Database:** PostgreSQL, psycopg v3.",
+            "explanation": "Found contextual reference containing the keyword 'python'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "3806002d-0010-476b-96dd-4c910c611b9c",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 75,
+            "content": "* **Database:** PostgreSQL, psycopg v3.\n* **Data Processing & Analysis:** Pandas, Python CSV library, Jupyter Notebooks.\n* **Hosting:** Netlify (Frontend), Render (FastAPI Backend + PostgreSQL Database).",
+            "explanation": "Found contextual reference containing the keyword 'python'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "9f482b27-abf3-415f-b674-594211e47b7b",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 123,
+            "content": "\u251c\u2500\u2500 scripts/                 # Data generation helper scripts\n\u2514\u2500\u2500 requirements.txt         # FastAPI backend Python packages\n```",
+            "explanation": "Found contextual reference containing the keyword 'python'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "76908feb-858c-49d0-b86f-70eac774890d",
+        "title": "Technical prose assertion",
+        "category": "OTHER",
+        "source_file": "README.md",
+        "line_number": 161,
+        "original_text": "5. **Start the Backend Server:**",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "1ede041f-0e92-4477-818e-f82249ef89a8",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 128,
+            "content": "## Getting Started",
+            "explanation": "Found contextual reference containing the keyword 'start'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "6167488d-798b-435f-b62b-15782db803d2",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 161,
+            "content": "5. **Start the Backend Server:**\n   ```bash",
+            "explanation": "Found contextual reference containing the keyword 'start'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "5cf06ea2-aeb9-4879-a83d-7d9c3652db8f",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 165,
+            "content": "```\n   The backend will start running on [http://127.0.0.1:8000](http://127.0.0.1:8000).",
+            "explanation": "Found contextual reference containing the keyword 'start'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "52dc4938-693b-49c9-87d5-da16ddaeecbe",
+        "title": "Technical prose assertion",
+        "category": "OTHER",
+        "source_file": "README.md",
+        "line_number": 187,
+        "original_text": "4. **Run the Development Server:**",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "27fd7409-eaf4-40c6-9f9f-4141620ac648",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 187,
+            "content": "4. **Run the Development Server:**\n   ```bash",
+            "explanation": "Found contextual reference containing the keyword 'development'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "55c0f4f8-55f9-4884-ad2e-f91de76403d3",
+        "title": "Hosting deployment environment",
+        "category": "DEPLOYMENT",
+        "source_file": "README.md",
+        "line_number": 202,
+        "original_text": "* **Frontend:** Deployed on **Netlify** at [https://gradscope.netlify.app](https://gradscope.netlify.app).",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "3b5b7391-2cae-4a86-872c-f4e9134a9b48",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 202,
+            "content": "* **Frontend:** Deployed on **Netlify** at [https://gradscope.netlify.app](https://gradscope.netlify.app).\n* **Backend:** Deployed on **Render** at [https://gradscope-api.onrender.com](https://gradscope-api.onrender.com).",
+            "explanation": "Found contextual reference containing the keyword 'deployed'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "e39b4141-bf32-4805-8b96-2c44a2fc2c7b",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 203,
+            "content": "* **Frontend:** Deployed on **Netlify** at [https://gradscope.netlify.app](https://gradscope.netlify.app).\n* **Backend:** Deployed on **Render** at [https://gradscope-api.onrender.com](https://gradscope-api.onrender.com).\n* **Repository Source:** Hosted on GitHub at [https://github.com/burgulvedant/gradscope](https://github.com/burgulvedant/gradscope).",
+            "explanation": "Found contextual reference containing the keyword 'deployed'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "433d72ba-79d0-4675-933c-b55ffe723224",
+        "title": "Hosting deployment environment",
+        "category": "DEPLOYMENT",
+        "source_file": "README.md",
+        "line_number": 203,
+        "original_text": "* **Backend:** Deployed on **Render** at [https://gradscope-api.onrender.com](https://gradscope-api.onrender.com).",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "02c61a89-9a36-4f78-8557-4f51a3721060",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 202,
+            "content": "* **Frontend:** Deployed on **Netlify** at [https://gradscope.netlify.app](https://gradscope.netlify.app).\n* **Backend:** Deployed on **Render** at [https://gradscope-api.onrender.com](https://gradscope-api.onrender.com).",
+            "explanation": "Found contextual reference containing the keyword 'deployed'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "a91d14c8-399b-40e5-977b-c3c8a9a85233",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 203,
+            "content": "* **Frontend:** Deployed on **Netlify** at [https://gradscope.netlify.app](https://gradscope.netlify.app).\n* **Backend:** Deployed on **Render** at [https://gradscope-api.onrender.com](https://gradscope-api.onrender.com).\n* **Repository Source:** Hosted on GitHub at [https://github.com/burgulvedant/gradscope](https://github.com/burgulvedant/gradscope).",
+            "explanation": "Found contextual reference containing the keyword 'deployed'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "19b20caa-8474-4713-8b95-90acf40f1927",
+        "title": "Hosting deployment environment",
+        "category": "DEPLOYMENT",
+        "source_file": "README.md",
+        "line_number": 205,
+        "original_text": "* **CI/CD Integration:** Builds and deploys automatically upon pushing new commits to the GitHub `main` branch.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "570b0b21-86cf-4a3b-98dc-8952c5af634d",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 205,
+            "content": "* **Repository Source:** Hosted on GitHub at [https://github.com/burgulvedant/gradscope](https://github.com/burgulvedant/gradscope).\n* **CI/CD Integration:** Builds and deploys automatically upon pushing new commits to the GitHub `main` branch.",
+            "explanation": "Found contextual reference containing the keyword 'integration'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "82a2f54a-6c9c-49b4-a929-7b2eaebb5d2d",
+        "title": "Application capability limit",
+        "category": "LIMIT",
+        "source_file": "README.md",
+        "line_number": 211,
+        "original_text": "* **2026 Data Horizon:** All tuition fee figures and Numbeo consumer pricing baselines correspond directly to the year 2026, without dynamic forecasting.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.85,
+        "explanation": "Found reference to year/baseline tokens in code datasets, but static analysis cannot verify if every tuition figure is dynamically correct or limited to 2026.",
+        "evidence": [
+          {
+            "id": "6a046435-02cc-4482-b1ff-ad54aacfb0c5",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "README.md",
+            "line_number": 26,
+            "content": "GradScope solves this by providing a unified, transparent decision-support calculator. Instead of manually cross-referencing university brochures, Numbeo indexes, and currency exchange tables, students can select their desired course, city, and institution, apply their expected scholarship percentage, and immediately receive a personalized cost breakdown based on the project's 2026 dataset.",
+            "explanation": "Found reference to token '2026' in database file or source script.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "02dcfa65-1a96-4ea3-9392-65128899177c",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "README.md",
+            "line_number": 83,
+            "content": "The application runs on a dataset containing **68 validated course/university combinations** across Australian capital cities:\n* **Processed Dataset:** `data/processed/gradscope_calculator_2026.csv` (The source of truth for tuition and program duration baselines).\n* **Raw Cost-of-Living Dataset:** `data/raw/australia_cost_of_living_2026_v2.csv` (Compiled city-level consumer prices).",
+            "explanation": "Found reference to token '2026' in database file or source script.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "a79daf1f-96ab-4570-b595-700fbf9c958f",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "README.md",
+            "line_number": 84,
+            "content": "* **Processed Dataset:** `data/processed/gradscope_calculator_2026.csv` (The source of truth for tuition and program duration baselines).\n* **Raw Cost-of-Living Dataset:** `data/raw/australia_cost_of_living_2026_v2.csv` (Compiled city-level consumer prices).\n* **Data Pipelines:** Jupyter Notebooks (`notebooks/01_data_cleaning.ipynb` to `04_build_lifecost_data_model.ipynb`) clean raw metrics, merge statistics, and build relational databases. Seeding is automated via `scripts/generate_processed_data.py` and `backend/app/seed.py`.",
+            "explanation": "Found reference to token '2026' in database file or source script.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "bd583dae-a7dd-4228-be8a-59baec154a79",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "README.md",
+            "line_number": 211,
+            "content": "* **2026 Data Horizon:** All tuition fee figures and Numbeo consumer pricing baselines correspond directly to the year 2026, without dynamic forecasting.\n* **Postgraduate Focus:** The platform currently models Master's level programs only, excluding undergraduate, diploma, or doctoral structures.",
+            "explanation": "Found reference to token '2026' in database file or source script.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          },
+          {
+            "id": "de78008f-90d0-4aec-8cf6-a1f17c9b6f87",
+            "relationship": "SUPPORTS",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/seed.py",
+            "line_number": 15,
+            "content": "/ \"processed\"\n    / \"gradscope_calculator_2026.csv\"\n)",
+            "explanation": "Found reference to token '2026' in database file or source script.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.85
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "e7e2f599-806e-4714-b89e-f582fbf1cd14",
+        "title": "Application capability limit",
+        "category": "LIMIT",
+        "source_file": "README.md",
+        "line_number": 214,
+        "original_text": "* **Stateless Wizard:** Configured selections in the wizard reset to Step 1 upon browser refresh.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.85,
+        "explanation": "Found reference to year/baseline tokens in code datasets, but static analysis cannot verify if every tuition figure is dynamically correct or limited to 2026.",
+        "evidence": [
+          {
+            "id": "c1825859-1ed4-4a06-b69b-a69f4c883572",
+            "relationship": "SUPPORTS",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 214,
+            "content": "* **Limited Selections:** The database is limited to 68 validated course/city/university combinations.\n* **Stateless Wizard:** Configured selections in the wizard reset to Step 1 upon browser refresh.",
+            "explanation": "Found contextual reference containing the keyword 'stateless'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "1f59e619-d420-4d9a-89e1-9d8eab76f039",
+        "title": "User authentication mechanism",
+        "category": "AUTHENTICATION",
+        "source_file": "README.md",
+        "line_number": 221,
+        "original_text": "* **Wizard State Retention:** Integrate `localStorage` or session persistence to retain study selections upon page refresh.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "f606fb3d-7394-4e78-9646-da5e2f322e59",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 32,
+            "content": "* **4-Step Configure Your Study Plan Wizard:** Interactive stepper guiding users to select a Course, City, University, and enter/configure an Expected Scholarship percentage.\n* **Dynamic Viewport Stepper Transitions:** Planner page automatically center-scrolls to the next active step upon selection to guide the user seamlessly through the flow.",
+            "explanation": "Found contextual reference containing the keyword 'wizard'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "0f0e389d-fb5c-4d68-98a0-c99cc9115b91",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 214,
+            "content": "* **Limited Selections:** The database is limited to 68 validated course/city/university combinations.\n* **Stateless Wizard:** Configured selections in the wizard reset to Step 1 upon browser refresh.",
+            "explanation": "Found contextual reference containing the keyword 'wizard'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "d900a27e-43f0-41e4-bd4f-ca1c94f5f7fe",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 221,
+            "content": "* **Extended Program Support:** Expand datasets to encompass Bachelor's (undergraduate) and PhD research study models.\n* **Wizard State Retention:** Integrate `localStorage` or session persistence to retain study selections upon page refresh.\n* **Custom Grocery Basket Adjustments:** Allow users to adjust unit quantities of individual food items in the groceries list to dynamically customize living cost indices.",
+            "explanation": "Found contextual reference containing the keyword 'wizard'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "d17de35a-933c-4a37-a715-0fe2cf55f2d0",
+        "title": "Technical prose assertion",
+        "category": "OTHER",
+        "source_file": "README.md",
+        "line_number": 223,
+        "original_text": "* **Dynamic Exchange Rates:** Integrate an API to convert costs into student-specific home country currencies in real-time.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "826958e0-3dd8-4fd7-8254-0a2755eaf4c3",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 33,
+            "content": "* **4-Step Configure Your Study Plan Wizard:** Interactive stepper guiding users to select a Course, City, University, and enter/configure an Expected Scholarship percentage.\n* **Dynamic Viewport Stepper Transitions:** Planner page automatically center-scrolls to the next active step upon selection to guide the user seamlessly through the flow.\n* **\"Where Your Total Comes From\" Cost Breakdown Card:** A clear comparative dashboard showing the cumulative program cost *Without Scholarship* vs. *With Scholarship*, highlighting net payable tuition and program-length savings.",
+            "explanation": "Found contextual reference containing the keyword 'dynamic'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "dc276ae4-3b80-4019-8a77-f45f740892bb",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 39,
+            "content": "* **Monthly Expenses Breakdown (Horizontal Bar Chart):** Breaks down the monthly living baseline into Housing, Food, Transit, and Utilities.\n* **Detailed Expandable Accordions:** Displays itemized grocery and utility costs dynamically mapped to the target city.\n* **Institutional Comparison Table:** Compares the selected course against other universities across Australia offering the same program, showing comparative tuition, living, and total costs side-by-side.",
+            "explanation": "Found contextual reference containing the keyword 'dynamic'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "64c81a88-609b-4c96-b994-37499c7e8458",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 106,
+            "content": "\u2502       \u251c\u2500\u2500 routes/          # API endpoint controllers (calculator, cities, universities)\n\u2502       \u251c\u2500\u2500 database.py      # SQLAlchemy connection, dynamic SSL & scheme parsing\n\u2502       \u251c\u2500\u2500 main.py          # FastAPI application initialization & CORS config",
+            "explanation": "Found contextual reference containing the keyword 'dynamic'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "8363d786-711c-40ce-a0de-f70df332f820",
+        "title": "Technical prose assertion",
+        "category": "OTHER",
+        "source_file": "data/source_map.md",
+        "line_number": 50,
+        "original_text": "- If a source uses weekly pricing, convert it to monthly during the Python cleaning stage.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "f4e7df9a-9a1a-43cb-b8ad-d0da976c203b",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 83,
+            "content": "The application runs on a dataset containing **68 validated course/university combinations** across Australian capital cities:\n* **Processed Dataset:** `data/processed/gradscope_calculator_2026.csv` (The source of truth for tuition and program duration baselines).\n* **Raw Cost-of-Living Dataset:** `data/raw/australia_cost_of_living_2026_v2.csv` (Compiled city-level consumer prices).",
+            "explanation": "Found contextual reference containing the keyword 'source'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "97b7617b-077d-4123-8ec6-cee0458760ef",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 118,
+            "content": "\u251c\u2500\u2500 data/\n\u2502   \u251c\u2500\u2500 raw/                 # Source Numbeo & education statistics\n\u2502   \u251c\u2500\u2500 processed/           # Cleaned datasets loaded by database seeder",
+            "explanation": "Found contextual reference containing the keyword 'source'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "f0b1ec1c-1f75-4f45-b977-4830c312da25",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 142,
+            "content": "python3 -m venv .venv\n   source .venv/bin/activate  # On Windows: .venv\\Scripts\\activate\n   ```",
+            "explanation": "Found contextual reference containing the keyword 'source'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "5a26bd24-647d-4462-8ed3-f98d9464f376",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "data/source_map.md",
+        "line_number": 64,
+        "original_text": "Relevant ABS tables:",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "92f8b106-2b36-4d71-b073-0c7a21642e64",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "data/source_map.md",
+            "line_number": 64,
+            "content": "Relevant ABS tables:",
+            "explanation": "Found contextual reference containing the keyword 'relevant'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "15a7b060-62b4-4728-a77a-331977f48064",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "data/source_map.md",
+        "line_number": 66,
+        "original_text": "- Table 10 \u2014 CPI Group, Sub-group and Expenditure Class, Index Numbers by Capital City",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "8d94d3c2-35a5-4c06-b315-244fd406f54a",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 26,
+            "content": "GradScope solves this by providing a unified, transparent decision-support calculator. Instead of manually cross-referencing university brochures, Numbeo indexes, and currency exchange tables, students can select their desired course, city, and institution, apply their expected scholarship percentage, and immediately receive a personalized cost breakdown based on the project's 2026 dataset.",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "8cd5503d-369a-40eb-a35e-cbbf553a73b3",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 40,
+            "content": "* **Detailed Expandable Accordions:** Displays itemized grocery and utility costs dynamically mapped to the target city.\n* **Institutional Comparison Table:** Compares the selected course against other universities across Australia offering the same program, showing comparative tuition, living, and total costs side-by-side.",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "56a53e78-5b7a-43c9-8cda-a07ce6517d54",
+            "relationship": "CONTEXTUAL",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/models.py",
+            "line_number": 8,
+            "content": "class CourseCost(Base):\n    __tablename__ = \"course_costs\"",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "19e0a931-488f-421f-a122-2a903442e433",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "data/source_map.md",
+        "line_number": 67,
+        "original_text": "- Table 11 \u2014 Annual percentage change by Capital City",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "27b66d68-526a-402e-af53-74fa57173e1c",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 26,
+            "content": "GradScope solves this by providing a unified, transparent decision-support calculator. Instead of manually cross-referencing university brochures, Numbeo indexes, and currency exchange tables, students can select their desired course, city, and institution, apply their expected scholarship percentage, and immediately receive a personalized cost breakdown based on the project's 2026 dataset.",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "3f7e67fd-aec9-444a-92d8-9ce57405ed01",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 40,
+            "content": "* **Detailed Expandable Accordions:** Displays itemized grocery and utility costs dynamically mapped to the target city.\n* **Institutional Comparison Table:** Compares the selected course against other universities across Australia offering the same program, showing comparative tuition, living, and total costs side-by-side.",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "2340b112-2324-49cb-ac34-b6139148b07a",
+            "relationship": "CONTEXTUAL",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/models.py",
+            "line_number": 8,
+            "content": "class CourseCost(Base):\n    __tablename__ = \"course_costs\"",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "708d08cd-d5c7-4600-a3dc-22eb65786760",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "data/source_map.md",
+        "line_number": 68,
+        "original_text": "- Table 12 \u2014 Monthly percentage change by Capital City",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "29cff8c5-a60a-4f6b-972a-3c1f2a4ce375",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 26,
+            "content": "GradScope solves this by providing a unified, transparent decision-support calculator. Instead of manually cross-referencing university brochures, Numbeo indexes, and currency exchange tables, students can select their desired course, city, and institution, apply their expected scholarship percentage, and immediately receive a personalized cost breakdown based on the project's 2026 dataset.",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "248ba0aa-7681-450a-8fd1-400da6e49331",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 40,
+            "content": "* **Detailed Expandable Accordions:** Displays itemized grocery and utility costs dynamically mapped to the target city.\n* **Institutional Comparison Table:** Compares the selected course against other universities across Australia offering the same program, showing comparative tuition, living, and total costs side-by-side.",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "40aa6a76-9722-48a4-afb7-45ddfafe3768",
+            "relationship": "CONTEXTUAL",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/models.py",
+            "line_number": 8,
+            "content": "class CourseCost(Base):\n    __tablename__ = \"course_costs\"",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "41cca613-2db8-4b76-80ba-5996cd207694",
+        "title": "Application feature component",
+        "category": "FEATURE",
+        "source_file": "data/source_map.md",
+        "line_number": 69,
+        "original_text": "- Table 16 \u2014 Analytical Series by Capital City",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "0feaf66b-4eb3-4af6-9da6-9ef287498f9a",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 26,
+            "content": "GradScope solves this by providing a unified, transparent decision-support calculator. Instead of manually cross-referencing university brochures, Numbeo indexes, and currency exchange tables, students can select their desired course, city, and institution, apply their expected scholarship percentage, and immediately receive a personalized cost breakdown based on the project's 2026 dataset.",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "7068e688-a49b-4e7e-8b00-289c5be1cafb",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "README.md",
+            "line_number": 40,
+            "content": "* **Detailed Expandable Accordions:** Displays itemized grocery and utility costs dynamically mapped to the target city.\n* **Institutional Comparison Table:** Compares the selected course against other universities across Australia offering the same program, showing comparative tuition, living, and total costs side-by-side.",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "e0e59fba-249f-4942-849b-a677e7a158cc",
+            "relationship": "CONTEXTUAL",
+            "source_type": "SOURCE_CODE",
+            "file_path": "backend/app/models.py",
+            "line_number": 8,
+            "content": "class CourseCost(Base):\n    __tablename__ = \"course_costs\"",
+            "explanation": "Found contextual reference containing the keyword 'table'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      },
+      {
+        "claim_id": "a9c7a01b-7fe9-4784-b392-43d4e89831f3",
+        "title": "Mathematical model behavior",
+        "category": "BEHAVIOR",
+        "source_file": "data/source_map.md",
+        "line_number": 85,
+        "original_text": "- Actual prices \u2192 used for monthly cost estimates.",
+        "verdict": "UNCERTAIN",
+        "truth_confidence": 0.75,
+        "explanation": "Evidence collected is insufficient or too ambiguous to confidently assert truth or contradiction.",
+        "evidence": [
+          {
+            "id": "ffb44f2e-a784-4d7b-86a6-224695244d16",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "data/source_map.md",
+            "line_number": 85,
+            "content": "- CPI data \u2192 used for trend analysis.\n- Actual prices \u2192 used for monthly cost estimates.",
+            "explanation": "Found contextual reference containing the keyword 'actual'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "40183e55-86ef-475c-bc0d-f2ddbadb5e54",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "data/source_map.md",
+            "line_number": 91,
+            "content": "## Actual Cost Sources",
+            "explanation": "Found contextual reference containing the keyword 'actual'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          },
+          {
+            "id": "ab34be82-d152-4b89-a89d-5d2b923ab948",
+            "relationship": "CONTEXTUAL",
+            "source_type": "CONFIGURATION",
+            "file_path": "data/source_map.md",
+            "line_number": 113,
+            "content": "Every actual cost observation must record its source in lifecost_data.csv.",
+            "explanation": "Found contextual reference containing the keyword 'actual'.",
+            "discovery_method": "token_keyword_match",
+            "confidence": 0.7
+          }
+        ],
+        "missing_evidence_types": []
+      }
+    ],
+    "contradicted": []
+  },
+  "evidence_summary": [
+    {
+      "source_type": "CONFIGURATION",
+      "discovery_method": "package_script_inspection",
+      "supporting": 2,
+      "contradicting": 0,
+      "contextual": 0
+    },
+    {
+      "source_type": "CONFIGURATION",
+      "discovery_method": "token_keyword_match",
+      "supporting": 24,
+      "contradicting": 0,
+      "contextual": 61
+    },
+    {
+      "source_type": "DEPENDENCY",
+      "discovery_method": "dependency_parsing",
+      "supporting": 29,
+      "contradicting": 0,
+      "contextual": 1
+    },
+    {
+      "source_type": "SOURCE_CODE",
+      "discovery_method": "file_presence_check",
+      "supporting": 1,
+      "contradicting": 0,
+      "contextual": 0
+    },
+    {
+      "source_type": "SOURCE_CODE",
+      "discovery_method": "route_regex_matching",
+      "supporting": 7,
+      "contradicting": 0,
+      "contextual": 0
+    },
+    {
+      "source_type": "SOURCE_CODE",
+      "discovery_method": "token_keyword_match",
+      "supporting": 42,
+      "contradicting": 0,
+      "contextual": 7
+    }
+  ]
+}
