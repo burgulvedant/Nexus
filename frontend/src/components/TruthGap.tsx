@@ -45,12 +45,11 @@ export default function TruthGap() {
 
           {/* Heading */}
           <h2 
-            className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-text-primary tracking-tight leading-tight transition-all duration-700 delay-100 transform break-words ${
+            className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-text-primary tracking-tight leading-tight text-center transition-all duration-700 delay-100 transform ${
               isRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <span className="block">Documentation can say one thing.</span>
-            <span className="block">Your software can say <span className="bg-gradient-to-r from-nexus-600 to-nexus-400 bg-clip-text text-transparent">another.</span></span>
+            Documentation can say one thing. Your software can say <span className="bg-gradient-to-r from-nexus-600 to-nexus-400 bg-clip-text text-transparent">another.</span>
           </h2>
 
           {/* Description */}
