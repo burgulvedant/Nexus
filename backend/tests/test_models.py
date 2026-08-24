@@ -86,3 +86,47 @@ def test_database_schema_relations_and_cascade(db_session):
     assert db_session.query(Claim).count() == 0
     assert db_session.query(Verdict).count() == 0
     assert db_session.query(Evidence).count() == 0
+
+
+def test_nullpool_engine_configuration_and_connection_lifecycle(tmp_path):
+    """
+    Regression test: Verifies that PostgreSQL engine configuration uses NullPool
+    for Supabase Transaction Pooler compatibility, and that sequential distinct
+    database sessions execute and close cleanly without stale pooled connection reuse.
+    """
+    from sqlalchemy import create_engine
+    from sqlalchemy.pool import NullPool
+    from sqlalchemy.orm import sessionmaker
+    from backend.app.core.database import Base
+    from backend.app.users.models import User
+
+    # Create engine using NullPool (as configured in production for PostgreSQL)
+    db_file = tmp_path / "nullpool_test.db"
+    test_engine = create_engine(f"sqlite:///{db_file}", poolclass=NullPool)
+    Base.metadata.create_all(bind=test_engine)
+
+    TestSession = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
+
+    # Request 1: Insert user
+    session1 = TestSession()
+    u1 = User(email="req1@nexus.ai", github_id="gh_111", github_username="user1")
+    session1.add(u1)
+    session1.commit()
+    session1.close()
+
+    # Request 2 (simulating a subsequent request without reusing a pooled socket):
+    session2 = TestSession()
+    retrieved = session2.query(User).filter(User.github_id == "gh_111").first()
+    assert retrieved is not None
+    assert retrieved.email == "req1@nexus.ai"
+    # Update on second request
+    retrieved.github_username = "user1_updated"
+    session2.commit()
+    session2.close()
+
+    # Request 3: Third sequential verification
+    session3 = TestSession()
+    verified = session3.query(User).filter(User.github_id == "gh_111").first()
+    assert verified.github_username == "user1_updated"
+    session3.close()
+

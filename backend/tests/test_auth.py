@@ -236,3 +236,61 @@ def test_github_oauth_callback_user_denial(client):
     assert "#auth_error=" in response.headers["location"]
 
 
+def test_github_oauth_callback_database_error_resilience(client, monkeypatch, db_session):
+    """
+    Verifies that when a database connection or query failure occurs during user upsert,
+    the callback handles it gracefully, rolls back, and returns a safe error redirect
+    instead of throwing an unhandled HTTP 500.
+    """
+    from backend.app.core.config import settings
+    from backend.app.core.security import create_oauth_state_token
+    from sqlalchemy.exc import OperationalError
+
+    monkeypatch.setattr(settings, "GITHUB_CLIENT_ID", "test_client_id_123")
+    monkeypatch.setattr(settings, "GITHUB_CLIENT_SECRET", "test_client_secret_456")
+    monkeypatch.setattr(settings, "FRONTEND_URL", "https://nexus-vedant.netlify.app")
+
+    test_state = create_oauth_state_token(expires_minutes=15)
+
+    # Mock external GitHub HTTP calls
+    class MockResponse:
+        def __init__(self, json_data, status_code=200):
+            self._json = json_data
+            self.status_code = status_code
+
+        def json(self):
+            return self._json
+
+    async def mock_post(self, url, **kwargs):
+        return MockResponse({"access_token": "gho_mock_token"})
+
+    async def mock_get(self, url, **kwargs):
+        return MockResponse({
+            "id": 999999,
+            "login": "db_fail_user",
+            "avatar_url": "https://example.com/avatar.jpg",
+            "email": "db_fail@nexus.ai",
+        })
+
+    import httpx
+    monkeypatch.setattr(httpx.AsyncClient, "post", mock_post)
+    monkeypatch.setattr(httpx.AsyncClient, "get", mock_get)
+
+    # Mock database query to simulate database/pooler failure
+    def mock_query_fail(*args, **kwargs):
+        raise OperationalError("Simulated database failure", {}, None)
+
+    monkeypatch.setattr(db_session, "query", mock_query_fail)
+
+    callback_resp = client.get(
+        f"/auth/github/callback?code=mock_code&state={test_state}",
+        follow_redirects=False,
+    )
+    assert callback_resp.status_code == status.HTTP_307_TEMPORARY_REDIRECT
+    redirect_loc = callback_resp.headers["location"]
+    assert "https://nexus-vedant.netlify.app/#auth_error=" in redirect_loc
+    import urllib.parse
+    assert "Database temporarily unavailable" in urllib.parse.unquote(redirect_loc)
+
+
+

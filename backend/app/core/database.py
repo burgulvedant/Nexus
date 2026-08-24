@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.pool import NullPool
 
 from backend.app.core.config import settings
 
@@ -24,9 +25,9 @@ engine_kwargs = {}
 if db_url.startswith("sqlite"):
     engine_kwargs["connect_args"] = {"check_same_thread": False}
 else:
-    # Resilient connection pooling for cloud PostgreSQL (Supabase / Render)
-    engine_kwargs["pool_pre_ping"] = True
-    engine_kwargs["pool_recycle"] = 300
+    # Use NullPool for Supabase Transaction Pooler (port 6543)
+    # Supavisor manages pooling server-side; client-side QueuePool causes connection reuse failures
+    engine_kwargs["poolclass"] = NullPool
 
 engine = create_engine(db_url, **engine_kwargs)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

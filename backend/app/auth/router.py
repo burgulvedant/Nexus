@@ -188,42 +188,50 @@ async def github_callback(
     except Exception as e:
         return RedirectResponse(url=f"{frontend_base}/#auth_error={urllib.parse.quote(f'Network error communicating with GitHub: {str(e)}')}")
 
-    # 4. Find or create Nexus User
-    user = None
-    if github_id:
-        user = db.query(User).filter(User.github_id == github_id).first()
+    # 4. Find or create Nexus User safely
+    try:
+        user = None
+        if github_id:
+            user = db.query(User).filter(User.github_id == github_id).first()
 
-    if not user and email:
-        user = db.query(User).filter(User.email == email).first()
+        if not user and email:
+            user = db.query(User).filter(User.email == email).first()
 
-    if user:
-        # Update existing user record with latest GitHub info & access token
-        user.github_id = github_id
-        user.github_username = github_username
-        user.github_avatar_url = github_avatar
-        user.github_access_token = github_token
-        db.commit()
-        db.refresh(user)
-    else:
-        # Create new Nexus user with GitHub credentials
-        user = User(
-            email=email,
-            hashed_password=None,
-            github_id=github_id,
-            github_username=github_username,
-            github_avatar_url=github_avatar,
-            github_access_token=github_token,
-            is_active=True,
-        )
-        db.add(user)
-        db.commit()
-        db.refresh(user)
+        if user:
+            # Update existing user record with latest GitHub info & access token
+            user.github_id = github_id
+            user.github_username = github_username
+            user.github_avatar_url = github_avatar
+            user.github_access_token = github_token
+            db.commit()
+            db.refresh(user)
+        else:
+            # Create new Nexus user with GitHub credentials
+            user = User(
+                email=email,
+                hashed_password=None,
+                github_id=github_id,
+                github_username=github_username,
+                github_avatar_url=github_avatar,
+                github_access_token=github_token,
+                is_active=True,
+            )
+            db.add(user)
+            db.commit()
+            db.refresh(user)
 
-    # 5. Create standard Nexus JWT access token
-    nexus_jwt = create_access_token(subject=user.id)
+        # 5. Create standard Nexus JWT access token
+        nexus_jwt = create_access_token(subject=user.id)
+    except Exception as e:
+        db.rollback()
+        error_name = type(e).__name__
+        print(f"[Nexus Auth Notice] Database user upsert failed ({error_name}). Safe redirect sent to client.")
+        redirect_err = urllib.parse.quote("Database temporarily unavailable")
+        return RedirectResponse(url=f"{frontend_base}/#auth_error={redirect_err}")
 
     # 6. Redirect to frontend dashboard with token in hash fragment
     return RedirectResponse(
         url=f"{frontend_base}/#token={nexus_jwt}",
         status_code=status.HTTP_307_TEMPORARY_REDIRECT
     )
+
