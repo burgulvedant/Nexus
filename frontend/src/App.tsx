@@ -54,23 +54,16 @@ export default function App() {
         return;
       }
 
-      // 3. Check for existing valid session in localStorage
-      const storedToken = localStorage.getItem('nexus_token');
-      if (storedToken) {
-        // If explicit navigation to home was clicked, allow landing; otherwise restore dashboard
-        if (hash === '#home' || hash === '#about' || hash === '#how-it-works' || hash === '#creator') {
-          setCurrentView('landing');
-        } else {
-          setCurrentView('dashboard');
-        }
-        return;
-      }
-
-      // 4. No token at all: regular landing navigation
+      // 3. Routing based on hash fragment
       if (hash === '#dashboard' || hash.startsWith('#/dashboard')) {
-        // Redirect to landing if unauthenticated
-        setCurrentView('landing');
+        const storedToken = localStorage.getItem('nexus_token');
+        if (storedToken) {
+          setCurrentView('dashboard');
+        } else {
+          setCurrentView('landing');
+        }
       } else {
+        // Bare domain ('') and all section anchors (#home, #about, etc.) open the public landing page
         setCurrentView('landing');
       }
     };
