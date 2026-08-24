@@ -20,31 +20,56 @@ export default function App() {
   useEffect(() => {
     const handleHashAndParams = () => {
       const hash = window.location.hash;
+      const urlParams = new URLSearchParams(window.location.search);
 
-      // 1. Check for token in hash fragment (#token=xxx)
-      if (hash.startsWith('#token=')) {
-        const token = hash.replace('#token=', '').split('&')[0];
-        if (token) {
-          localStorage.setItem('nexus_token', token);
-          // Clean URL and navigate to dashboard
-          window.history.replaceState(null, '', window.location.pathname + '#dashboard');
-          setCurrentView('dashboard');
-          return;
-        }
+      // 1. Check for auth error in hash fragment (#auth_error=xxx) or query (?auth_error=xxx)
+      let authError: string | null = null;
+      if (hash.startsWith('#auth_error=')) {
+        authError = decodeURIComponent(hash.replace('#auth_error=', '').split('&')[0]);
+      } else if (urlParams.has('auth_error')) {
+        authError = decodeURIComponent(urlParams.get('auth_error') || '');
       }
 
-      // 2. Check for auth error in hash fragment (#auth_error=xxx)
-      if (hash.startsWith('#auth_error=')) {
-        const errorMsg = decodeURIComponent(hash.replace('#auth_error=', '').split('&')[0]);
-        alert(`GitHub Authentication Failed: ${errorMsg}`);
+      if (authError) {
+        alert(`GitHub Authentication Failed: ${authError}`);
         window.history.replaceState(null, '', window.location.pathname);
         setCurrentView('landing');
         return;
       }
 
-      // 3. Regular hash navigation
-      if (hash === '#dashboard' || hash.startsWith('#/dashboard')) {
+      // 2. Discover token in priority order: #token=... -> ?token=... -> localStorage('nexus_token')
+      let token: string | null = null;
+      if (hash.startsWith('#token=')) {
+        token = hash.replace('#token=', '').split('&')[0];
+      } else if (urlParams.has('token')) {
+        token = urlParams.get('token');
+      }
+
+      if (token) {
+        // Fresh token received from OAuth callback
+        localStorage.setItem('nexus_token', token);
+        // Clean URL and navigate to dashboard
+        window.history.replaceState(null, '', window.location.pathname + '#dashboard');
         setCurrentView('dashboard');
+        return;
+      }
+
+      // 3. Check for existing valid session in localStorage
+      const storedToken = localStorage.getItem('nexus_token');
+      if (storedToken) {
+        // If explicit navigation to home was clicked, allow landing; otherwise restore dashboard
+        if (hash === '#home' || hash === '#about' || hash === '#how-it-works' || hash === '#creator') {
+          setCurrentView('landing');
+        } else {
+          setCurrentView('dashboard');
+        }
+        return;
+      }
+
+      // 4. No token at all: regular landing navigation
+      if (hash === '#dashboard' || hash.startsWith('#/dashboard')) {
+        // Redirect to landing if unauthenticated
+        setCurrentView('landing');
       } else {
         setCurrentView('landing');
       }
@@ -62,12 +87,20 @@ export default function App() {
   };
 
   const navigateToLanding = () => {
+    // Navigation back to landing page preserves stored session
+    window.location.hash = '#home';
+    setCurrentView('landing');
+  };
+
+  const handleLogout = () => {
+    // Explicit user sign-out: clear stored JWT and reset hash
+    localStorage.removeItem('nexus_token');
     window.location.hash = '';
     setCurrentView('landing');
   };
 
   if (currentView === 'dashboard') {
-    return <Dashboard onBackToLanding={navigateToLanding} />
+    return <Dashboard onBackToLanding={navigateToLanding} onLogout={handleLogout} />
   }
 
   return (

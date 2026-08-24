@@ -25,9 +25,10 @@ import {
 
 interface DashboardProps {
   onBackToLanding: () => void;
+  onLogout?: () => void;
 }
 
-export default function Dashboard({ onBackToLanding }: DashboardProps) {
+export default function Dashboard({ onBackToLanding, onLogout }: DashboardProps) {
   const [currentTab, setCurrentTab] = useState('dashboard');
   const [repositories, setRepositories] = useState<RepositorySummary[]>([]);
   const [currentAnalysis, setCurrentAnalysis] = useState<AnalysisDetail | null>(null);
@@ -433,7 +434,7 @@ export default function Dashboard({ onBackToLanding }: DashboardProps) {
             onNewAnalysis={() => setIsNewAnalysisOpen(true)}
           />
         ) : currentTab === 'settings' ? (
-          <Settings onSignOut={onBackToLanding} />
+          <Settings onSignOut={onLogout || onBackToLanding} />
         ) : repositories.length === 0 && !loading ? (
           /* Empty State when all repositories have been deleted */
           <div className="p-8 sm:p-14 max-w-2xl mx-auto text-center space-y-4 my-auto">
