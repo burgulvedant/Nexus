@@ -12,6 +12,7 @@ import Footer from './components/Footer'
 import Dashboard from './components/dashboard/Dashboard'
 import MarkdownReportModal from './components/dashboard/MarkdownReportModal'
 import { GRADSCOPE_EXAMPLE_REPORT_MD } from './data/gradscopeExampleReport'
+import { api } from './api/nexusApi'
 
 export default function App() {
   const [currentView, setCurrentView] = useState<'landing' | 'dashboard'>('landing')
@@ -47,7 +48,7 @@ export default function App() {
 
       if (token) {
         // Fresh token received from OAuth callback
-        localStorage.setItem('nexus_token', token);
+        api.setToken(token);
         // Clean URL and navigate to dashboard
         window.history.replaceState(null, '', window.location.pathname + '#dashboard');
         setCurrentView('dashboard');
@@ -56,7 +57,7 @@ export default function App() {
 
       // 3. Routing based on hash fragment
       if (hash === '#dashboard' || hash.startsWith('#/dashboard')) {
-        const storedToken = localStorage.getItem('nexus_token');
+        const storedToken = api.getToken();
         if (storedToken) {
           setCurrentView('dashboard');
         } else {
@@ -87,7 +88,7 @@ export default function App() {
 
   const handleLogout = () => {
     // Explicit user sign-out: clear stored JWT and reset hash
-    localStorage.removeItem('nexus_token');
+    api.logout();
     window.location.hash = '';
     setCurrentView('landing');
   };

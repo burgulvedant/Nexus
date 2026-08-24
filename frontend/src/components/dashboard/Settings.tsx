@@ -42,6 +42,7 @@ export default function Settings({ onSignOut }: SettingsProps) {
       setDeleteError(null);
       await api.deleteCurrentUser();
       setIsDeleteModalOpen(false);
+      api.logout();
       onSignOut();
     } catch (err: any) {
       console.error('Error deleting account:', err);

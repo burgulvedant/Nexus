@@ -124,9 +124,10 @@ export default function Dashboard({ onBackToLanding, onLogout }: DashboardProps)
       setLoading(true);
       setError(null);
 
-      // Ensure session exists (uses stored token if present)
+      // Verify active session token exists; if unauthenticated, return to landing
       if (!api.getToken()) {
-        await api.getOrCreateDevSession();
+        onBackToLanding();
+        return;
       }
 
       // Fetch existing repositories for the active user session
