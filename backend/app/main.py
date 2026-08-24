@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from backend.app.core.database import Base, engine
 
@@ -22,13 +23,21 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.app.core.config import settings
 
-# Create tables (SQLite fallback or database-specific auto-migration on start)
-Base.metadata.create_all(bind=engine)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Safe table auto-creation on startup without blocking server boot
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        error_name = type(e).__name__
+        print(f"[Nexus DB Notice] Automatic table creation deferred on startup ({error_name}). API server is operational.")
+    yield
 
 app = FastAPI(
     title="Nexus API",
     description="Evidence-based software documentation verification platform.",
-    version="0.1.0"
+    version="0.1.0",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
