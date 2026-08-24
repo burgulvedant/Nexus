@@ -3,9 +3,18 @@ interface SidebarProps {
   onSelectTab: (tab: string) => void;
   onNewAnalysis: () => void;
   onHome?: () => void;
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
 }
 
-export default function Sidebar({ currentTab, onSelectTab, onNewAnalysis, onHome }: SidebarProps) {
+export default function Sidebar({
+  currentTab,
+  onSelectTab,
+  onNewAnalysis,
+  onHome,
+  isMobileOpen = false,
+  onCloseMobile,
+}: SidebarProps) {
   const mainNav = [
     { id: 'home', label: 'Home', icon: (
       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -59,108 +68,125 @@ export default function Sidebar({ currentTab, onSelectTab, onNewAnalysis, onHome
     )},
   ];
 
-  return (
-    <aside className="w-[230px] lg:w-[240px] shrink-0 bg-white border-r border-border/80 flex flex-col p-4 sm:p-5 h-screen overflow-y-auto">
-      <div className="space-y-6">
-        {/* Logo */}
-        <div className="flex items-center space-x-2.5 px-2 py-1">
-          <svg className="h-6 w-6 text-nexus-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round">
-            <line x1="12" y1="2" x2="12" y2="22" />
-            <line x1="2" y1="12" x2="22" y2="12" />
-            <line x1="5" y1="5" x2="19" y2="19" />
-            <line x1="19" y1="5" x2="5" y2="19" />
-          </svg>
-          <span className="font-bold tracking-wide text-text-primary text-lg">NEXUS</span>
-        </div>
+  const renderNavSection = (items: typeof mainNav, isMobile: boolean) => (
+    <nav className="space-y-1">
+      {items.map((item) => {
+        const active = currentTab === item.id;
+        const handleClick = () => {
+          if (item.id === 'home' && onHome) {
+            onHome();
+          } else if (item.id === 'new-analysis') {
+            onNewAnalysis();
+          } else {
+            onSelectTab(item.id);
+          }
+          if (isMobile && onCloseMobile) {
+            onCloseMobile();
+          }
+        };
 
-        {/* MAIN */}
-        <div>
-          <span className="text-xs font-bold text-text-muted uppercase tracking-wider px-2.5 mb-2 block">
-            MAIN
-          </span>
-          <nav className="space-y-1">
-            {mainNav.map((item) => {
-              const active = currentTab === item.id;
-              const handleClick = () => {
-                if (item.id === 'home' && onHome) {
-                  onHome();
-                } else if (item.id === 'new-analysis') {
-                  onNewAnalysis();
-                } else {
-                  onSelectTab(item.id);
-                }
-              };
+        return (
+          <button
+            key={item.id}
+            onClick={handleClick}
+            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition cursor-pointer ${
+              active
+                ? 'bg-nexus-50 text-nexus-700 shadow-2xs'
+                : 'text-text-secondary hover:bg-slate-50 hover:text-text-primary'
+            }`}
+          >
+            <span className={active ? 'text-nexus-600' : 'text-text-muted'}>{item.icon}</span>
+            <span>{item.label}</span>
+          </button>
+        );
+      })}
+    </nav>
+  );
 
-              return (
-                <button
-                  key={item.id}
-                  onClick={handleClick}
-                  className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition cursor-pointer ${
-                    active
-                      ? 'bg-nexus-50 text-nexus-700 shadow-2xs'
-                      : 'text-text-secondary hover:bg-slate-50 hover:text-text-primary'
-                  }`}
-                >
-                  <span className={active ? 'text-nexus-600' : 'text-text-muted'}>{item.icon}</span>
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
-
-        {/* INSIGHTS */}
-        <div>
-          <span className="text-xs font-bold text-text-muted uppercase tracking-wider px-2.5 mb-2 block">
-            INSIGHTS
-          </span>
-          <nav className="space-y-1">
-            {insightsNav.map((item) => {
-              const active = currentTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => onSelectTab(item.id)}
-                  className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition cursor-pointer ${
-                    active
-                      ? 'bg-nexus-50 text-nexus-700 shadow-2xs'
-                      : 'text-text-secondary hover:bg-slate-50 hover:text-text-primary'
-                  }`}
-                >
-                  <span className={active ? 'text-nexus-600' : 'text-text-muted'}>{item.icon}</span>
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
-
-        {/* SETTINGS */}
-        <div>
-          <span className="text-xs font-bold text-text-muted uppercase tracking-wider px-2.5 mb-2 block">
-            SETTINGS
-          </span>
-          <nav className="space-y-1">
-            {settingsNav.map((item) => {
-              const active = currentTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => onSelectTab(item.id)}
-                  className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition cursor-pointer ${
-                    active
-                      ? 'bg-nexus-50 text-nexus-700 shadow-2xs'
-                      : 'text-text-secondary hover:bg-slate-50 hover:text-text-primary'
-                  }`}
-                >
-                  <span className={active ? 'text-nexus-600' : 'text-text-muted'}>{item.icon}</span>
-                  <span>{item.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
+  const renderNavContent = (isMobile: boolean) => (
+    <div className="space-y-6">
+      {/* MAIN */}
+      <div>
+        <span className="text-xs font-bold text-text-muted uppercase tracking-wider px-2.5 mb-2 block">
+          MAIN
+        </span>
+        {renderNavSection(mainNav, isMobile)}
       </div>
-    </aside>
+
+      {/* INSIGHTS */}
+      <div>
+        <span className="text-xs font-bold text-text-muted uppercase tracking-wider px-2.5 mb-2 block">
+          INSIGHTS
+        </span>
+        {renderNavSection(insightsNav, isMobile)}
+      </div>
+
+      {/* SETTINGS */}
+      <div>
+        <span className="text-xs font-bold text-text-muted uppercase tracking-wider px-2.5 mb-2 block">
+          SETTINGS
+        </span>
+        {renderNavSection(settingsNav, isMobile)}
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      {/* 1. Desktop Sidebar (Unchanged stationary left rail) */}
+      <aside className="hidden md:flex md:w-[230px] lg:w-[240px] shrink-0 bg-white border-r border-border/80 flex-col p-4 sm:p-5 h-screen overflow-y-auto">
+        <div className="space-y-6">
+          {/* Logo */}
+          <div className="flex items-center space-x-2.5 px-2 py-1">
+            <svg className="h-6 w-6 text-nexus-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round">
+              <line x1="12" y1="2" x2="12" y2="22" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <line x1="5" y1="5" x2="19" y2="19" />
+              <line x1="19" y1="5" x2="5" y2="19" />
+            </svg>
+            <span className="font-bold tracking-wide text-text-primary text-lg">NEXUS</span>
+          </div>
+
+          {renderNavContent(false)}
+        </div>
+      </aside>
+
+      {/* 2. Mobile Navigation Drawer Overlay (Visible on < md when open) */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 md:hidden flex">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity duration-200"
+            onClick={onCloseMobile}
+          />
+          {/* Slide-out Drawer */}
+          <aside className="relative w-[280px] max-w-[85vw] bg-white h-full flex flex-col p-5 overflow-y-auto shadow-2xl z-10 animate-in slide-in-from-left duration-200">
+            <div className="flex items-center justify-between pb-4 border-b border-border/60 mb-5">
+              <div className="flex items-center space-x-2.5">
+                <svg className="h-6 w-6 text-nexus-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round">
+                  <line x1="12" y1="2" x2="12" y2="22" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <line x1="5" y1="5" x2="19" y2="19" />
+                  <line x1="19" y1="5" x2="5" y2="19" />
+                </svg>
+                <span className="font-bold tracking-wide text-text-primary text-lg">NEXUS</span>
+              </div>
+              <button
+                type="button"
+                onClick={onCloseMobile}
+                className="p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-slate-100 transition cursor-pointer"
+                aria-label="Close navigation menu"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {renderNavContent(true)}
+          </aside>
+        </div>
+      )}
+    </>
   );
 }

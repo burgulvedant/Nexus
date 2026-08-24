@@ -375,18 +375,56 @@ export default function Dashboard({ onBackToLanding, onLogout }: DashboardProps)
     }
   };
 
+  // Mobile Navigation Drawer State
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
-    <div className="flex h-screen bg-[#f1f5f9] text-text-primary antialiased font-sans overflow-hidden">
-      {/* 1. Left Sidebar (Stationary full height) */}
+    <div className="flex flex-col md:flex-row min-h-screen md:h-screen bg-[#f1f5f9] text-text-primary antialiased font-sans overflow-x-hidden md:overflow-hidden w-full max-w-full">
+      {/* 1. Left Sidebar (Stationary full height on desktop, drawer on mobile) */}
       <Sidebar
         currentTab={currentTab}
         onSelectTab={setCurrentTab}
         onNewAnalysis={() => setIsNewAnalysisOpen(true)}
         onHome={onBackToLanding}
+        isMobileOpen={isMobileMenuOpen}
+        onCloseMobile={() => setIsMobileMenuOpen(false)}
       />
 
       {/* 2. Main Dashboard Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <div className="flex-1 flex flex-col min-w-0 md:overflow-y-auto w-full max-w-full">
+        {/* Mobile Top Header (Visible on < md screens) */}
+        <div className="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-border/80 sticky top-0 z-30 shrink-0">
+          <div className="flex items-center space-x-2.5">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-1.5 -ml-1.5 rounded-lg text-text-secondary hover:text-text-primary hover:bg-slate-100 transition cursor-pointer"
+              aria-label="Open navigation menu"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <div className="flex items-center space-x-2">
+              <svg className="h-5 w-5 text-nexus-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round">
+                <line x1="12" y1="2" x2="12" y2="22" />
+                <line x1="2" y1="12" x2="22" y2="12" />
+                <line x1="5" y1="5" x2="19" y2="19" />
+                <line x1="19" y1="5" x2="5" y2="19" />
+              </svg>
+              <span className="font-bold tracking-wide text-text-primary text-base">NEXUS</span>
+            </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="text-xs font-bold text-nexus-600 bg-nexus-50 px-2 py-0.5 rounded-full border border-nexus-200 capitalize">
+              {currentTab === 'dashboard' ? 'Dashboard' : currentTab.replace('-', ' ')}
+            </span>
+            <div className="w-7 h-7 rounded-full bg-nexus-600 text-white flex items-center justify-center font-bold text-xs shadow-2xs">
+              VB
+            </div>
+          </div>
+        </div>
+
         {currentTab !== 'settings' && (
           <DashboardHeader
             analysis={currentAnalysis}
