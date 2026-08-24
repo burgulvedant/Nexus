@@ -57,11 +57,11 @@ export default function ProductPreview() {
   ];
 
   return (
-    <section className="pt-2 md:pt-4 pb-8 md:pb-16 px-4 md:px-6">
+    <section className="pt-2 md:pt-4 pb-8 md:pb-16 px-3 sm:px-4 md:px-6 max-w-full overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div
           ref={containerRef}
-          className="product-reveal bg-[#f1f5f9] rounded-2xl md:rounded-3xl border border-border shadow-2xl shadow-nexus-600/5 ring-1 ring-nexus-200/50 overflow-hidden flex min-h-[850px] font-sans antialiased text-text-primary pointer-events-none select-none cursor-default"
+          className="product-reveal bg-[#f1f5f9] rounded-2xl md:rounded-3xl border border-border shadow-2xl shadow-nexus-600/5 ring-1 ring-nexus-200/50 overflow-hidden flex min-h-[850px] font-sans antialiased text-text-primary pointer-events-none select-none cursor-default max-w-full"
         >
           {/* 1. LEFT SIDEBAR (Matching finalized Sidebar structure exactly) */}
           <aside className="hidden lg:flex flex-col w-[230px] shrink-0 bg-white border-r border-border/80 p-4 sm:p-5">
@@ -305,17 +305,17 @@ export default function ProductPreview() {
                     </div>
 
                     {/* Tabs */}
-                    <div className="flex items-center space-x-2 border-b border-border/60 pb-2 mb-3">
-                      <span className="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-nexus-50 text-nexus-700">
+                    <div className="flex items-center space-x-2 border-b border-border/60 pb-2 mb-3 overflow-x-auto max-w-full">
+                      <span className="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-nexus-50 text-nexus-700 shrink-0">
                         All Findings (73)
                       </span>
-                      <span className="text-xs font-semibold px-2.5 py-1.5 rounded-lg text-text-muted">
+                      <span className="text-xs font-semibold px-2.5 py-1.5 rounded-lg text-text-muted shrink-0">
                         Verified (36)
                       </span>
-                      <span className="text-xs font-semibold px-2.5 py-1.5 rounded-lg text-text-muted">
+                      <span className="text-xs font-semibold px-2.5 py-1.5 rounded-lg text-text-muted shrink-0">
                         Uncertain (37)
                       </span>
-                      <span className="text-xs font-semibold px-2.5 py-1.5 rounded-lg text-text-muted">
+                      <span className="text-xs font-semibold px-2.5 py-1.5 rounded-lg text-text-muted shrink-0">
                         Contradicted (0)
                       </span>
                     </div>

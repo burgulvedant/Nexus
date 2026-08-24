@@ -92,7 +92,7 @@ export default function FinalCTA({ onAnalyzeRepo, onSeeExampleReport }: FinalCTA
         .anim-chip-float-5 { animation: floatChip 4.8s infinite ease-in-out 1.8s; }
       `}</style>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex flex-col items-center">
         {/* Centered Eyebrow Pill */}
         <span 
           className={`inline-block bg-nexus-50 text-nexus-700 border border-nexus-200 rounded-full px-4 py-1 text-xs font-semibold tracking-widest uppercase mb-8 transition-all duration-700 transform ${
@@ -104,7 +104,7 @@ export default function FinalCTA({ onAnalyzeRepo, onSeeExampleReport }: FinalCTA
 
         {/* Large Rounded CTA Container Card (max-w-5xl to align exactly with the Nexus Report) */}
         <div 
-          className={`bg-white border border-nexus-100/60 rounded-[2rem] p-8 md:p-12 shadow-2xl shadow-nexus-600/5 ring-1 ring-nexus-200/50 max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 transition-all duration-1000 transform relative overflow-hidden ${
+          className={`bg-white border border-nexus-100/60 rounded-[2rem] p-6 sm:p-8 md:p-12 shadow-2xl shadow-nexus-600/5 ring-1 ring-nexus-200/50 max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 transition-all duration-1000 transform relative overflow-hidden ${
             isRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >

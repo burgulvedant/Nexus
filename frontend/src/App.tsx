@@ -104,9 +104,9 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-page">
+    <div className="min-h-screen bg-surface-page w-full overflow-x-hidden">
       <Navbar onConnectGitHub={handleConnectWithGitHub} />
-      <main>
+      <main className="w-full max-w-full overflow-x-hidden">
         <div id="home">
           <HeroSection 
             onSeeExampleReport={() => setIsExampleReportOpen(true)}

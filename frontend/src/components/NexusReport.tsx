@@ -58,7 +58,7 @@ export default function NexusReport() {
       ref={sectionRef}
       className={`relative w-full bg-white transition-colors duration-1000 ${isRevealed ? 'revealed' : ''}`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-16 md:py-24">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 md:mb-20">
@@ -73,7 +73,7 @@ export default function NexusReport() {
 
           {/* Heading */}
           <h2 
-            className={`text-3xl md:text-4xl lg:text-5xl font-extrabold text-text-primary tracking-tight leading-tight transition-all duration-700 delay-100 transform ${
+            className={`text-3xl md:text-4xl lg:text-5xl font-extrabold text-text-primary tracking-tight leading-tight transition-all duration-700 delay-100 transform break-words ${
               isRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -93,7 +93,7 @@ export default function NexusReport() {
 
         {/* Main Product Report Visualization Container */}
         <div 
-          className={`bg-white border border-border/80 rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-xl shadow-nexus-600/5 ring-1 ring-nexus-200/50 max-w-5xl mx-auto transition-all duration-1000 transform ${
+          className={`bg-white border border-border/80 rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 shadow-xl shadow-nexus-600/5 ring-1 ring-nexus-200/50 max-w-5xl mx-auto transition-all duration-1000 transform ${
             isRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           } delay-300`}
         >

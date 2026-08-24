@@ -30,7 +30,7 @@ export default function TruthGap() {
       ref={sectionRef}
       className={`relative w-full border-t border-border/60 bg-[#f8fafc]/30 transition-colors duration-1000 ${isRevealed ? 'revealed' : ''}`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-16 md:py-24">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 md:mb-20">
@@ -45,11 +45,11 @@ export default function TruthGap() {
 
           {/* Heading */}
           <h2 
-            className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-text-primary tracking-tight leading-tight transition-all duration-700 delay-100 transform ${
+            className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-text-primary tracking-tight leading-tight transition-all duration-700 delay-100 transform break-words ${
               isRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            <span className="block whitespace-nowrap">Documentation can say one thing.</span>
+            <span className="block">Documentation can say one thing.</span>
             <span className="block">Your software can say <span className="bg-gradient-to-r from-nexus-600 to-nexus-400 bg-clip-text text-transparent">another.</span></span>
           </h2>
 

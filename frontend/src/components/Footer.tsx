@@ -22,7 +22,7 @@ export default function Footer({ onAnalyzeRepo, onSeeExampleReport }: FooterProp
   return (
     <footer className="w-full bg-[#f8fafc]/40 border-t border-border/60 relative">
       {/* Centered bounding wrapper matching the navbar/dashboard max-w-7xl structure */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-8 flex flex-col space-y-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 pt-16 pb-8 flex flex-col space-y-12">
         
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">

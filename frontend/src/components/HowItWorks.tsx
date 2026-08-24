@@ -62,7 +62,7 @@ export default function HowItWorks() {
       `}</style>
 
       {/* Centered bounding wrapper matching the navbar/dashboard max-w-7xl structure */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-16 md:py-24">
         
         {/* Title area */}
         <div className="text-center max-w-2xl mx-auto mb-16 md:mb-20">
@@ -74,7 +74,7 @@ export default function HowItWorks() {
             HOW NEXUS WORKS
           </span>
           <h2 
-            className={`text-3xl md:text-4xl lg:text-5xl font-extrabold text-text-primary tracking-tight leading-tight transition-all duration-700 delay-100 transform ${
+            className={`text-3xl md:text-4xl lg:text-5xl font-extrabold text-text-primary tracking-tight leading-tight transition-all duration-700 delay-100 transform break-words ${
               isRevealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -230,13 +230,13 @@ export default function HowItWorks() {
             {/* Visual */}
             <div className="h-40 flex items-center justify-center bg-slate-50/50 border border-slate-100 rounded-xl p-4 mt-6">
               <div className="flex flex-col space-y-2 w-full">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="bg-white border border-border rounded p-2 flex-1 shadow-2xs">
+                <div className="flex items-center justify-between gap-2 min-w-0">
+                  <div className="bg-white border border-border rounded p-2 flex-1 shadow-2xs min-w-0">
                     <span className="text-[7px] text-text-muted font-bold block mb-0.5">DOCUMENTATION</span>
                     <p className="text-[8px] text-text-secondary truncate font-serif italic">&ldquo;GET /api/courses returns...&rdquo;</p>
                   </div>
                   <span className="text-[8px] font-bold text-text-muted shrink-0 px-1 py-0.5 bg-slate-100 rounded border">VS</span>
-                  <div className="bg-white border border-border rounded p-2 flex-1 shadow-2xs">
+                  <div className="bg-white border border-border rounded p-2 flex-1 shadow-2xs min-w-0">
                     <span className="text-[7px] text-nexus-600 font-bold block mb-0.5">SOURCE CODE</span>
                     <p className="text-[8px] font-mono text-text-secondary truncate">@router.get("/courses")</p>
                   </div>
