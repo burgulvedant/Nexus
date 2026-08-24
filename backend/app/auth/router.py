@@ -1,3 +1,4 @@
+import uuid
 import secrets
 import urllib.parse
 import httpx
@@ -199,15 +200,17 @@ async def github_callback(
 
         if user:
             # Update existing user record with latest GitHub info & access token
+            user_id = user.id
             user.github_id = github_id
             user.github_username = github_username
             user.github_avatar_url = github_avatar
             user.github_access_token = github_token
             db.commit()
-            db.refresh(user)
         else:
-            # Create new Nexus user with GitHub credentials
+            # Create new Nexus user with explicit UUID (avoids post-commit lazy reload)
+            user_id = uuid.uuid4()
             user = User(
+                id=user_id,
                 email=email,
                 hashed_password=None,
                 github_id=github_id,
@@ -218,10 +221,9 @@ async def github_callback(
             )
             db.add(user)
             db.commit()
-            db.refresh(user)
 
-        # 5. Create standard Nexus JWT access token
-        nexus_jwt = create_access_token(subject=user.id)
+        # 5. Create standard Nexus JWT access token without post-commit database calls
+        nexus_jwt = create_access_token(subject=user_id)
     except Exception as e:
         db.rollback()
         error_name = type(e).__name__
