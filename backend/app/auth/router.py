@@ -7,7 +7,12 @@ from sqlalchemy.orm import Session
 
 from backend.app.core.config import settings
 from backend.app.core.database import get_db
-from backend.app.core.security import verify_password, create_access_token
+from backend.app.core.security import (
+    verify_password,
+    create_access_token,
+    create_oauth_state_token,
+    verify_oauth_state_token,
+)
 from backend.app.auth.schemas import Token
 from backend.app.users.models import User
 from backend.app.users.schemas import UserCreate, UserResponse
@@ -15,9 +20,6 @@ from backend.app.users.service import get_user_by_email, create_user
 from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
-
-# In-memory CSRF state cache (expiring/set)
-_valid_oauth_states: set[str] = set()
 
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
@@ -70,8 +72,8 @@ def github_login():
             detail="GITHUB_CLIENT_ID is not configured on the server."
         )
 
-    state = secrets.token_urlsafe(32)
-    _valid_oauth_states.add(state)
+    # Generate cryptographically signed, timestamped stateless OAuth CSRF token
+    state = create_oauth_state_token(expires_minutes=15)
 
     params = {
         "client_id": settings.GITHUB_CLIENT_ID,
@@ -112,12 +114,10 @@ async def github_callback(
         redirect_err = urllib.parse.quote("Missing code or state parameter from GitHub OAuth callback.")
         return RedirectResponse(url=f"{frontend_base}/#auth_error={redirect_err}")
 
-    # Validate CSRF state
-    if state not in _valid_oauth_states:
+    # Validate CSRF state using stateless cryptographic signature and expiration
+    if not verify_oauth_state_token(state):
         redirect_err = urllib.parse.quote("Invalid or expired OAuth state parameter.")
         return RedirectResponse(url=f"{frontend_base}/#auth_error={redirect_err}")
-
-    _valid_oauth_states.remove(state)
 
     if not settings.GITHUB_CLIENT_ID or not settings.GITHUB_CLIENT_SECRET:
         redirect_err = urllib.parse.quote("GitHub OAuth client credentials are not configured.")

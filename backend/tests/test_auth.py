@@ -54,6 +54,9 @@ def test_login_with_incorrect_password(client):
 
 def test_github_login_redirect_url(client, monkeypatch):
     from backend.app.core.config import settings
+    from backend.app.core.security import verify_oauth_state_token
+    import urllib.parse
+
     monkeypatch.setattr(settings, "GITHUB_CLIENT_ID", "test_client_id_123")
     monkeypatch.setattr(settings, "GITHUB_REDIRECT_URI", "http://localhost:8000/auth/github/callback")
 
@@ -65,19 +68,53 @@ def test_github_login_redirect_url(client, monkeypatch):
     assert "redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fauth%2Fgithub%2Fcallback" in redirect_url
     assert "state=" in redirect_url
 
+    # Verify generated state is cryptographically valid and signed
+    parsed = urllib.parse.urlparse(redirect_url)
+    qs = urllib.parse.parse_qs(parsed.query)
+    state_token = qs["state"][0]
+    assert verify_oauth_state_token(state_token) is True
+
+
+def test_oauth_state_cryptographic_verification():
+    from backend.app.core.security import (
+        create_oauth_state_token,
+        verify_oauth_state_token,
+        create_access_token,
+    )
+
+    # A. Valid state token -> accepted
+    valid_state = create_oauth_state_token(expires_minutes=15)
+    assert verify_oauth_state_token(valid_state) is True
+
+    # B. Expired state token -> rejected
+    expired_state = create_oauth_state_token(expires_minutes=-5)
+    assert verify_oauth_state_token(expired_state) is False
+
+    # C. Tampered state token -> rejected
+    tampered_state = valid_state[:-4] + "abcd"
+    assert verify_oauth_state_token(tampered_state) is False
+
+    # D. Malformed / arbitrary string -> rejected
+    assert verify_oauth_state_token("not-a-token") is False
+    assert verify_oauth_state_token("") is False
+    assert verify_oauth_state_token(None) is False
+
+    # E. Wrong-purpose token (e.g. user access JWT) -> rejected
+    user_access_token = create_access_token(subject="user-12345")
+    assert verify_oauth_state_token(user_access_token) is False
+
 
 def test_github_oauth_callback_new_user_success(client, monkeypatch, db_session):
     from backend.app.core.config import settings
-    from backend.app.auth.router import _valid_oauth_states
+    from backend.app.core.security import create_oauth_state_token
     from backend.app.users.models import User
 
     monkeypatch.setattr(settings, "GITHUB_CLIENT_ID", "test_client_id_123")
     monkeypatch.setattr(settings, "GITHUB_CLIENT_SECRET", "test_client_secret_456")
     monkeypatch.setattr(settings, "FRONTEND_URL", "http://localhost:5174")
 
-    # Add a valid CSRF state
-    test_state = "mock_valid_state_12345"
-    _valid_oauth_states.add(test_state)
+    # Generate stateless cryptographically signed CSRF state token
+    test_state = create_oauth_state_token(expires_minutes=15)
 
     # Mock external GitHub HTTP calls
     class MockResponse:
@@ -110,7 +147,7 @@ def test_github_oauth_callback_new_user_success(client, monkeypatch, db_session)
     monkeypatch.setattr(httpx.AsyncClient, "post", MockResponse.mock_post)
     monkeypatch.setattr(httpx.AsyncClient, "get", MockResponse.mock_get)
 
-    # Call callback
+    # Call callback with signed state
     callback_resp = client.get(
         f"/auth/github/callback?code=mock_github_code_123&state={test_state}",
         follow_redirects=False,
@@ -129,7 +166,7 @@ def test_github_oauth_callback_new_user_success(client, monkeypatch, db_session)
 
 def test_github_oauth_callback_existing_user_link(client, monkeypatch, db_session):
     from backend.app.core.config import settings
-    from backend.app.auth.router import _valid_oauth_states
+    from backend.app.core.security import create_oauth_state_token
     from backend.app.users.models import User
 
     monkeypatch.setattr(settings, "GITHUB_CLIENT_ID", "test_client_id_123")
@@ -138,8 +175,7 @@ def test_github_oauth_callback_existing_user_link(client, monkeypatch, db_sessio
     # Create existing user with email
     client.post("/auth/register", json={"email": "existing@nexus.ai", "password": "password123"})
 
-    test_state = "mock_valid_state_existing"
-    _valid_oauth_states.add(test_state)
+    test_state = create_oauth_state_token(expires_minutes=15)
 
     class MockResponse:
         def __init__(self, json_data, status_code=200):
@@ -198,4 +234,5 @@ def test_github_oauth_callback_user_denial(client):
     )
     assert response.status_code == status.HTTP_307_TEMPORARY_REDIRECT
     assert "#auth_error=" in response.headers["location"]
+
 
