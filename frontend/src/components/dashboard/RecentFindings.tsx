@@ -117,22 +117,36 @@ export default function RecentFindings({
               return (
                 <div
                   key={f.claim_id || idx}
-                  className="p-3 sm:p-3.5 rounded-xl hover:bg-slate-50/80 border border-transparent hover:border-slate-200/60 transition space-y-1 w-full"
+                  className="p-3 sm:p-3.5 rounded-xl hover:bg-slate-50/80 border border-transparent hover:border-slate-200/60 transition w-full"
                 >
-                  <div className="flex items-start justify-between gap-4 w-full">
-                    <div className="flex items-start space-x-3 flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4 w-full">
+                    {/* Left block: Status dot + Claim text (full width on mobile) */}
+                    <div className="flex items-start space-x-2.5 sm:space-x-3 flex-1 min-w-0">
                       <span className={`${dotColor} text-xl leading-none font-black shrink-0 mt-0.5`}>&bull;</span>
-                      <div className="flex-1 min-w-0 space-y-0.5">
-                        <p className="text-[15px] font-semibold text-text-primary leading-snug break-words">
+                      <div className="flex-1 min-w-0 space-y-1">
+                        <p className="text-sm sm:text-[15px] font-semibold text-text-primary leading-snug break-words">
                           &ldquo;{f.description || f.original_text}&rdquo;
                         </p>
-                        <span className="text-[13px] font-mono text-text-muted block break-all">
+                        
+                        {/* Mobile Metadata (Visible on < sm screens) */}
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pt-0.5 sm:hidden text-xs text-text-muted">
+                          <span>
+                            Confidence <strong className="text-text-secondary font-bold">{f.truth_confidence.toFixed(2)}</strong>
+                          </span>
+                          <span>
+                            Evidence <strong className="text-text-secondary font-bold">{f.evidence?.length || 0}</strong>
+                          </span>
+                        </div>
+
+                        {/* Source Location */}
+                        <span className="text-xs sm:text-[13px] font-mono text-text-muted block break-all">
                           {firstEvidenceLocation}
                         </span>
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-3.5 shrink-0 text-right pt-0.5">
+                    {/* Right block: Desktop Metadata (Visible on sm: and above) */}
+                    <div className="hidden sm:flex items-center space-x-3.5 shrink-0 text-right pt-0.5">
                       <div className="text-[13px] text-text-muted font-medium">
                         Confidence <strong className="text-text-secondary font-bold">{f.truth_confidence.toFixed(2)}</strong>
                       </div>
