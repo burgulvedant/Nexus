@@ -13,6 +13,7 @@ import Dashboard from './components/dashboard/Dashboard'
 import MarkdownReportModal from './components/dashboard/MarkdownReportModal'
 import { GRADSCOPE_EXAMPLE_REPORT_MD } from './data/gradscopeExampleReport'
 import { api } from './api/nexusApi'
+import ProductHuntBadge from './components/ProductHuntBadge'
 
 export default function App() {
   const [currentView, setCurrentView] = useState<'landing' | 'dashboard'>('landing')
@@ -101,6 +102,8 @@ export default function App() {
     <div className="min-h-screen bg-surface-page w-full overflow-x-hidden">
       <Navbar onConnectGitHub={handleConnectWithGitHub} />
       <main className="w-full max-w-full overflow-x-hidden">
+        {/* TEMPORARY: Product Hunt launch badge — remove after launch promotion ends */}
+        <ProductHuntBadge />
         <div id="home">
           <HeroSection 
             onSeeExampleReport={() => setIsExampleReportOpen(true)}
