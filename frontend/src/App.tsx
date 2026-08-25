@@ -102,14 +102,14 @@ export default function App() {
     <div className="min-h-screen bg-surface-page w-full overflow-x-hidden">
       <Navbar onConnectGitHub={handleConnectWithGitHub} />
       <main className="w-full max-w-full overflow-x-hidden">
-        {/* TEMPORARY: Product Hunt launch badge — remove after launch promotion ends */}
-        <ProductHuntBadge />
         <div id="home">
           <HeroSection 
             onSeeExampleReport={() => setIsExampleReportOpen(true)}
             onAnalyzeRepo={handleConnectWithGitHub}
           />
         </div>
+        {/* TEMPORARY: Product Hunt launch badge — remove after launch promotion ends */}
+        <ProductHuntBadge />
         <div id="product-preview">
           <ProductPreview />
         </div>
